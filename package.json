@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "ingest": "tsx scripts/ingest.ts",
+    "migrate:supabase": "tsx scripts/migrate-to-supabase.ts",
     "test": "vitest",
     "test:e2e": "playwright test"
   },
@@ -32,6 +33,7 @@
     "openai": "4.73.0",
     "pg": "8.13.1",
     "pgvector": "0.2.0",
+    "@supabase/supabase-js": "^2.39.0",
     "cheerio": "1.0.0",
     "@mozilla/readability": "0.5.0",
     "jsdom": "24.1.3",
