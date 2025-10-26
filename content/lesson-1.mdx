@@ -1,0 +1,168 @@
+export const metadata = {
+  title: "Responsible AI in K-12 Education",
+  slug: "responsible-ai",
+  duration: "5 minutes",
+  order: 1,
+};
+
+
+<Objectives items={[
+  "Understand benefits and risks of AI for AT resources",
+  "Protect student privacy and data",
+  "Apply TechBridge Learning's privacy-first approach"
+]} />
+
+## Why AI for AT Resources?
+
+The challenge is real: many K-12 teachers receive little formal training in assistive technology, yet they're expected to support diverse learners every day. Finding the right AT tools can feel overwhelming—sifting through countless websites, vendor materials, and research studies takes time educators don't have.
+
+**The opportunity:** AI can dramatically reduce the time spent finding relevant, evidence-based AT resources. Instead of hours of searching, you can get personalized recommendations in seconds.
+
+**TechBridge Learning's commitment:** We believe AI should empower educators while protecting student privacy. Our AI assistant is built on a foundation of responsible practices, transparent citations, and educator-centered design.
+
+---
+
+## The Benefits
+
+When used responsibly, AI-powered AT resource discovery offers significant advantages:
+
+<FeatureGrid features={[
+  {
+    icon: "🚀",
+    title: "Instant Access to Relevant Resources",
+    description: "No more endless Google searches or outdated bookmark folders. Ask a question in plain language and get targeted recommendations immediately."
+  },
+  {
+    icon: "⏱️",
+    title: "Time Saved on Research and Planning",
+    description: "What used to take 30-60 minutes of research can happen in under 2 minutes, freeing you to focus on implementation and student support."
+  },
+  {
+    icon: "🎯",
+    title: "Personalized Support for Diverse Learner Needs",
+    description: "Describe your specific classroom context—grade level, available devices, student challenges—and get recommendations tailored to your situation."
+  },
+  {
+    icon: "📚",
+    title: "Evidence-Based Recommendations",
+    description: "Our AI draws from vetted sources: SETT Framework documentation, Iowa Department of Education guidance, and trusted educational technology sites."
+  }
+]} />
+
+---
+
+## The Risks We Avoid
+
+AI is powerful, but not without risks. Here's what we're actively preventing:
+
+<ComparisonTable 
+  variant="risk"
+  leftHeader="Risk"
+  rightHeader="Our Approach"
+  rows={[
+    {
+      risk: "Many commercial AI tools collect and store user queries, potentially exposing student information.",
+      approach: "Your queries stay within TechBridge Learning systems. We don't send data to third-party AI providers that might use it for model training."
+    },
+    {
+      risk: "AI systems can perpetuate biases present in their training data, potentially excluding culturally responsive or lesser-known tools.",
+      approach: "We curate our knowledge base carefully and always provide multiple options across tech levels (low, mid, high)."
+    },
+    {
+      risk: "Treating AI as a replacement for professional judgment and AT expertise.",
+      approach: "Every response reminds you to use the SETT Framework, trial tools with students, and consult your AT specialist."
+    },
+    {
+      risk: "Student data being shared with vendors, advertisers, or other entities without consent.",
+      approach: "Zero third-party sharing. Your conversations are private and ephemeral."
+    }
+  ]}
+/>
+
+---
+
+## Our Privacy-First Approach
+
+TechBridge Learning has built this AI assistant with privacy as the foundation, not an afterthought.
+
+<FeatureGrid features={[
+  {
+    icon: "🔒",
+    title: "Queries Stay Within Our Secure Systems",
+    description: "When you ask a question, it's processed on our secure infrastructure. We don't use external AI services that might log or train on your data."
+  },
+  {
+    icon: "🚷",
+    title: "No Student Data Enters the AI",
+    description: "You should never include student names, IDs, photos, IEP details, or other personally identifiable information (PII). The system actively blocks queries containing PII and reminds you of safe alternatives."
+  },
+  {
+    icon: "📖",
+    title: "Transparent Citations",
+    description: "Every recommendation includes 2-6 source links so you can verify information, dive deeper, and share resources with colleagues."
+  },
+  {
+    icon: "👨‍🏫",
+    title: "Teachers Remain Decision-Makers",
+    description: "AI provides options; you make the final call. You know your students, your classroom environment, and your school's resources better than any algorithm."
+  }
+]} />
+
+---
+
+## Real-World Example
+
+<ProsConsCard 
+  bad={{
+    title: "❌ Unsafe Query",
+    example: "What tools can help Sarah Martinez (IEP #4532) with her reading challenges?",
+    reason: "Includes student name and IEP number—PII that violates FERPA."
+  }}
+  good={{
+    title: "✅ Safe Query",
+    example: "What are low-tech and mid-tech AT tools for a 3rd-grade student with decoding challenges during independent reading?",
+    reason: "Describes the challenge, context, and task without identifying any specific student."
+  }}
+/>
+
+---
+
+## Knowledge Check
+
+<Quiz questions={[
+  {
+    prompt: "AI tools can replace the need for special education teachers and AT specialists.",
+    options: ["True", "False"],
+    answerIndex: 1,
+    feedback: "AI is a tool to assist educators, not replace them. Professional judgment, relationships with students, and expertise in AT implementation remain essential."
+  },
+  {
+    prompt: "It's safe to enter student names into ChatGPT or other public AI tools when asking for AT recommendations.",
+    options: ["True", "False"],
+    answerIndex: 1,
+    feedback: "Never enter student names, IDs, or other PII into public AI systems. Always use general descriptions instead."
+  },
+  {
+    prompt: "AI can help me find AT tools faster than traditional web searches.",
+    options: ["True", "False"],
+    answerIndex: 0,
+    feedback: "Correct! AI-powered search can quickly surface relevant, contextualized recommendations from a curated knowledge base."
+  },
+  {
+    prompt: "TechBridge Learning's AI assistant stores my queries and uses them to train AI models.",
+    options: ["True", "False"],
+    answerIndex: 1,
+    feedback: "Your queries are NOT stored or used for training. Privacy is our top priority."
+  },
+  {
+    prompt: "I should still use my professional judgment when selecting AT tools, even when AI provides recommendations.",
+    options: ["True", "False"],
+    answerIndex: 0,
+    feedback: "Absolutely! Always use the SETT Framework, trial tools with students, and consult your AT specialist before making final decisions."
+  }
+]} />
+
+---
+
+**Ready to learn how to write effective AI prompts?** Continue to Lesson 2: Prompt Engineering.
+

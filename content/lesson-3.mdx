@@ -1,0 +1,294 @@
+export const metadata = {
+  title: "Student Data Privacy & AI",
+  slug: "data-privacy",
+  duration: "6 minutes",
+  order: 3,
+};
+
+<InfoCard title="What is PII?" icon="Shield" variant="warning">
+**Personally Identifiable Information (PII)** is any data that could identify a specific student. Under FERPA (Family Educational Rights and Privacy Act) and COPPA (Children's Online Privacy Protection Act), educators must protect student PII from unauthorized disclosure.
+</InfoCard>
+
+---
+
+## Never Share These in AI Queries
+
+When asking AI for AT recommendations, **never** include:
+
+<IconGrid variant="danger" items={[
+  {
+    icon: "📛",
+    title: "Names",
+    items: [
+      "Student first names, last names, or nicknames",
+      "Parent/guardian names",
+      "Teacher names linked to specific students"
+    ]
+  },
+  {
+    icon: "🆔",
+    title: "Identifiers",
+    items: [
+      "Student ID numbers",
+      "IEP numbers or case identifiers",
+      "Social Security Numbers",
+      "School-issued email addresses"
+    ]
+  },
+  {
+    icon: "📸",
+    title: "Photos & Media",
+    items: [
+      "Student photos, videos, or voice recordings",
+      "Screenshots showing student names",
+      "Work samples with identifying information"
+    ]
+  },
+  {
+    icon: "🏠",
+    title: "Contact Information",
+    items: [
+      "Home addresses",
+      "Phone numbers",
+      "Email addresses"
+    ]
+  },
+  {
+    icon: "🩺",
+    title: "Medical/IEP Details",
+    items: [
+      "Specific diagnoses linked to names",
+      "IEP goals tied to individuals",
+      "Medical records or test scores"
+    ]
+  },
+  {
+    icon: "📊",
+    title: "Grades & Test Scores",
+    items: [
+      "Student IDs with scores",
+      "Identifiable performance data",
+      "Individual assessment results"
+    ]
+  }
+]} />
+
+---
+
+## What IS Safe to Query
+
+You can (and should!) provide rich context—just keep it general and de-identified:
+
+<IconGrid variant="success" items={[
+  {
+    icon: "✅",
+    title: "General Challenges",
+    items: [
+      "Student with dyslexia",
+      "Learner with fine motor difficulties",
+      "Child with ADHD and executive function challenges"
+    ]
+  },
+  {
+    icon: "🏫",
+    title: "Classroom Context",
+    items: [
+      "General education 3rd-grade classroom",
+      "Resource room with 6 students",
+      "1:1 Chromebook environment"
+    ]
+  },
+  {
+    icon: "📝",
+    title: "Tasks & Goals",
+    items: [
+      "Write multi-paragraph essays",
+      "Decode unfamiliar words during independent reading",
+      "Take notes during science lectures"
+    ]
+  },
+  {
+    icon: "💻",
+    title: "Environment & Resources",
+    items: [
+      "iPads and laptops available",
+      "Flexible seating",
+      "Access to assistive technology library"
+    ]
+  },
+  {
+    icon: "🛠️",
+    title: "AT Categories & Preferences",
+    items: [
+      "Low-tech, low-cost options",
+      "Free apps for Chromebooks",
+      "High-tech speech-to-text tools"
+    ]
+  }
+]} />
+
+---
+
+## Interactive Exercise: Safe vs. Unsafe
+
+Drag each query into the correct category. Think carefully: could this query identify a specific student?
+
+<DragDrop items={[
+  {
+    id: "1",
+    text: "What AT tools help Johnny Smith with his ADHD and reading challenges?",
+    correct: "Unsafe"
+  },
+  {
+    id: "2",
+    text: "What AT tools help students with ADHD stay focused during independent work?",
+    correct: "Safe"
+  },
+  {
+    id: "3",
+    text: "My student with IEP #12345 needs writing support. What should I use?",
+    correct: "Unsafe"
+  },
+  {
+    id: "4",
+    text: "What are low-tech writing supports for elementary students with dysgraphia?",
+    correct: "Safe"
+  },
+  {
+    id: "5",
+    text: "Here are photos of my students using devices—what AT should I buy?",
+    correct: "Unsafe"
+  },
+  {
+    id: "6",
+    text: "What are Chromebook-friendly text-to-speech options for middle school?",
+    correct: "Safe"
+  },
+  {
+    id: "7",
+    text: "Contact parent Maria Lopez at 555-1234 to discuss AT options.",
+    correct: "Unsafe"
+  },
+  {
+    id: "8",
+    text: "What graphic organizers work well for 5th graders organizing essay ideas?",
+    correct: "Safe"
+  }
+]} />
+
+---
+
+## FERPA & COPPA: The Basics
+
+<ComparisonTable 
+  variant="comparison"
+  leftHeader="FERPA (Family Educational Rights and Privacy Act)"
+  rightHeader="COPPA (Children's Online Privacy Protection Act)"
+  rows={[
+    {
+      risk: "Protects the privacy of student education records",
+      approach: "Protects children under 13 from online data collection"
+    },
+    {
+      risk: "Gives parents rights to access, review, and request changes to records",
+      approach: "Requires parental consent before collecting, using, or disclosing personal information from children"
+    },
+    {
+      risk: "Requires schools to get written consent before disclosing PII from education records (with some exceptions)",
+      approach: "Many AI tools collect and store user data—making them non-compliant for student use without consent"
+    },
+    {
+      risk: "For AI use: Don't enter student records, grades, IEP details, or names into AI systems without proper safeguards and consent.",
+      approach: "For AI use: TechBridge Learning's assistant is designed to comply with COPPA by not collecting or storing student PII."
+    }
+  ]}
+/>
+
+---
+
+## Safe Query Checklist
+
+Before you submit a query to the AI assistant, ask yourself:
+
+- [ ] **Could this identify a specific student?**  
+  (If yes, remove names, IDs, or specific details)
+
+- [ ] **Am I describing a general challenge or context?**  
+  (If no, make it more general)
+
+- [ ] **Would I feel comfortable posting this publicly?**  
+  (If no, it probably contains PII—rephrase it)
+
+- [ ] **Does this include the SETT elements (Student need, Environment, Task, Tools)?**  
+  (If yes, great! You're providing helpful context without PII)
+
+---
+
+## Example: Transforming an Unsafe Query
+
+<ProsConsCard 
+  bad={{
+    title: "❌ Unsafe Original",
+    example: "What tools can help Sarah Johnson (student ID #4521, IEP for dyslexia) improve her reading fluency? She's in Ms. Garcia's 4th-grade class and scored 35% on the DIBELS assessment.",
+    reason: "Problems: Student name (Sarah Johnson), Student ID (#4521), Specific IEP detail linked to name, Teacher name, Specific test score"
+  }}
+  good={{
+    title: "✅ Safe Revision",
+    example: "What are low-tech and mid-tech AT tools for a 4th-grade student with dyslexia who struggles with reading fluency during independent reading? The classroom has Chromebooks and a small-group reading area.",
+    reason: "Why it works: General grade level (4th grade), Challenge described (dyslexia, reading fluency), Context provided (independent reading, Chromebooks), No identifying information"
+  }}
+/>
+
+---
+
+## What Happens if I Accidentally Include PII?
+
+Don't panic! TechBridge Learning's AI assistant has built-in PII detection. If your query contains potential PII, you'll receive:
+
+1. **A privacy reminder** (no query is processed)
+2. **A specific hint** about what to remove
+3. **A chance to rephrase and resubmit**
+
+This safety layer protects you and your students.
+
+---
+
+## Knowledge Check
+
+<Quiz questions={[
+  {
+    prompt: "It's okay to include a student's first name if I don't include their last name.",
+    options: ["True", "False"],
+    answerIndex: 1,
+    feedback: "Even first names can be identifying, especially in smaller schools or when combined with other details. Always use general descriptions instead."
+  },
+  {
+    prompt: "Which is a safe way to describe a student? A: 'Student with dyslexia' B: 'Emily Rodriguez'",
+    options: ["A", "B"],
+    answerIndex: 0,
+    feedback: "Correct! Describe the challenge or need without naming the student."
+  },
+  {
+    prompt: "FERPA protects student education records, including grades, IEP details, and disciplinary records.",
+    options: ["True", "False"],
+    answerIndex: 0,
+    feedback: "Yes! FERPA gives parents rights and requires schools to protect student education records."
+  },
+  {
+    prompt: "I can share a screenshot of a student's IEP goals if I blur out the student's name.",
+    options: ["True", "False"],
+    answerIndex: 1,
+    feedback: "Screenshots may contain other identifying information (dates, teacher names, school logos, handwriting). Describe goals generally instead."
+  },
+  {
+    prompt: "Before submitting a query, I should ask: 'Could this identify a specific student?'",
+    options: ["True", "False"],
+    answerIndex: 0,
+    feedback: "Absolutely! This is the most important question to ask yourself every time."
+  }
+]} />
+
+---
+
+**You're almost done!** Next, learn how to combine SETT and AI for powerful AT decision-making. Continue to Lesson 4: Using SETT with AI.
+

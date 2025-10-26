@@ -1,0 +1,217 @@
+export const metadata = {
+  title: "Prompt Engineering for AT Resources",
+  slug: "prompt-engineering",
+  duration: "7 minutes",
+  order: 2,
+};
+
+<InfoCard title="What is Prompt Engineering?" icon="Lightbulb">
+Prompt engineering is the practice of asking AI the right question to get actionable, accurate answers. A well-crafted prompt includes context, specificity, and clear goals—turning vague requests into precise, useful recommendations.
+</InfoCard>
+
+---
+
+## The SETT Anatomy of a Good Prompt
+
+The **SETT Framework** (Student, Environment, Tasks, Tools) isn't just for AT decision-making—it's also the perfect template for writing AI queries.
+
+### 🧑‍🎓 **S**tudent Need
+Describe the challenge or learning profile (without identifying the student).  
+Examples: "student with dyslexia," "5th grader with fine motor challenges," "middle school student with ADHD"
+
+### 🏫 **E**nvironment
+Describe the setting and available resources.  
+Examples: "general education classroom," "1:1 Chromebook environment," "resource room with iPads"
+
+### ✍️ **T**ask
+What does the student need to accomplish?  
+Examples: "write multi-paragraph essays," "decode multisyllabic words," "take notes during lectures"
+
+### 🛠️ **T**ools (optional but helpful)
+Specify tech level or cost preferences.  
+Examples: "low-tech options," "free or low-cost tools," "mid-tech apps for Chromebooks"
+
+---
+
+## Examples: Bad → Good
+
+Let's see how adding SETT elements transforms vague prompts into powerful ones.
+
+### Example 1: Reading Support
+
+<ProsConsCard 
+  bad={{
+    title: "❌ Bad Prompt",
+    example: "Help with reading",
+    reason: "Too vague. What kind of reading challenge? What grade? What's the goal?"
+  }}
+  good={{
+    title: "✅ Good Prompt",
+    example: "What low-tech AT tools help elementary students with dyslexia decode multisyllabic words during independent reading?",
+    reason: "Includes student need (dyslexia, decoding), environment (elementary, independent reading), task (decode words), and tool preference (low-tech)."
+  }}
+/>
+
+### Example 2: Writing Assistance
+
+<ProsConsCard 
+  bad={{
+    title: "❌ Bad Prompt",
+    example: "Tools for my student",
+    reason: "No context. What task? What challenge? What devices are available?"
+  }}
+  good={{
+    title: "✅ Good Prompt",
+    example: "What are free text-to-speech tools for Chromebooks that help middle school students with reading comprehension?",
+    reason: "Specifies environment (Chromebooks), student level (middle school), challenge (reading comprehension), task (implied: reading assignments), and cost (free)."
+  }}
+/>
+
+### Example 3: Note-Taking
+
+<ProsConsCard 
+  bad={{
+    title: "❌ Bad Prompt",
+    example: "Note taking help",
+    reason: "Doesn't specify the challenge, grade level, or device constraints."
+  }}
+  good={{
+    title: "✅ Good Prompt",
+    example: "What mid-tech and high-tech AT tools support high school students with slow processing speed in taking lecture notes on an iPad?",
+    reason: "Student need (slow processing), environment (high school, iPad), task (lecture notes), tool level (mid/high-tech)."
+  }}
+/>
+
+---
+
+## Practice Scenarios
+
+Now it's your turn! For each scenario, write a complete AI query using the SETT framework.
+
+<PromptPractice scenario={{
+  title: "Scenario A: Fine Motor Challenges",
+  student: "2nd grader with fine motor challenges (difficulty gripping pencils, slow handwriting)",
+  environment: "General education classroom with access to Chromebooks and paper materials",
+  task: "Complete writing assignments (sentences, short paragraphs)",
+  hints: [
+    "Mention the grade level and specific challenge",
+    "Include both available resources (Chromebooks + paper)",
+    "Specify the task (writing assignments)",
+    "Consider asking for multiple tech levels (low-tech pencil grips AND mid-tech typing supports)"
+  ]
+}} />
+
+<PromptPractice scenario={{
+  title: "Scenario B: Math Problem-Solving",
+  student: "6th grader with dyscalculia (struggles with multi-step math problems)",
+  environment: "Inclusion math class, students use laptops",
+  task: "Solve multi-step word problems and show work",
+  hints: [
+    "Describe the math challenge specifically",
+    "Mention the laptop environment",
+    "Include the need to 'show work' (visual organizers might help)",
+    "Ask for both low-tech (graphic organizers) and high-tech (apps) options"
+  ]
+}} />
+
+<PromptPractice scenario={{
+  title: "Scenario C: Attention and Focus",
+  student: "9th grader with ADHD (difficulty staying focused during independent work)",
+  environment: "Resource room with flexible seating and tablets",
+  task: "Complete reading assignments and written reflections independently",
+  hints: [
+    "Highlight the attention/focus challenge",
+    "Mention independent work context",
+    "Include available tech (tablets)",
+    "Consider tools for both reading support AND writing support"
+  ]
+}} />
+
+---
+
+## Step-by-Step Example: Crafting Effective Prompts
+
+<InfoCard title="Watch the Transformation" icon="Lightbulb">
+Let's see how a teacher transforms a vague question into a powerful, SETT-based prompt step by step.
+</InfoCard>
+
+<ProcessSteps steps={[
+  {
+    number: 1,
+    title: "Start with a vague question",
+    description: '"I need help with writing tools."',
+    badge: "Too vague"
+  },
+  {
+    number: 2,
+    title: "Add Student need",
+    description: '"I need help with writing tools for a student with dysgraphia."',
+    badge: "Better"
+  },
+  {
+    number: 3,
+    title: "Add Environment",
+    description: '"I need help with writing tools for a 5th-grade student with dysgraphia in a Chromebook classroom."',
+    badge: "Getting specific"
+  },
+  {
+    number: 4,
+    title: "Add Task",
+    description: '"What writing tools help a 5th-grade student with dysgraphia write essays and take notes in a Chromebook classroom?"',
+    badge: "Almost there"
+  },
+  {
+    number: 5,
+    title: "Add Tool preferences",
+    description: '"What free or low-cost mid-tech and high-tech writing tools help a 5th-grade student with dysgraphia write essays and take notes in a Chromebook classroom?"',
+    badge: "Perfect! ✨"
+  }
+]} />
+
+---
+
+## Quick Reference: Prompt Formula
+
+```
+What [tech level] AT tools help [grade/age] students with [challenge]
+[accomplish task] in a [environment] setting?
+```
+
+**Example:**  
+"What low-tech and mid-tech AT tools help 4th-grade students with dysgraphia complete written assignments in a general education classroom with Chromebooks?"
+
+---
+
+## Knowledge Check
+
+<Quiz questions={[
+  {
+    prompt: "A good AI prompt should include details about the student's challenge, environment, and task.",
+    options: ["True", "False"],
+    answerIndex: 0,
+    feedback: "Correct! The SETT framework helps you provide context for better, more relevant recommendations."
+  },
+  {
+    prompt: "Which prompt is better? A: 'Reading tools' B: 'What free text-to-speech apps work on iPads for 3rd graders with decoding challenges?'",
+    options: ["A", "B"],
+    answerIndex: 1,
+    feedback: "Prompt B is specific, includes the environment (iPad), student level (3rd grade), challenge (decoding), and cost preference (free)."
+  },
+  {
+    prompt: "It's okay to include a student's name if it helps the AI understand the context better.",
+    options: ["True", "False"],
+    answerIndex: 1,
+    feedback: "Never include student names or PII. Describe challenges generally instead."
+  },
+  {
+    prompt: "The SETT Framework stands for: Student, Environment, Tasks, Tools.",
+    options: ["True", "False"],
+    answerIndex: 0,
+    feedback: "Correct! SETT is a widely-used framework for AT decision-making and works perfectly for structuring AI prompts."
+  }
+]} />
+
+---
+
+**Next up:** Learn how to protect student privacy when using AI. Continue to Lesson 3: Student Data Privacy & AI.
+
