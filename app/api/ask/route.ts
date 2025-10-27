@@ -26,6 +26,14 @@ const client = new OpenAI({
  */
 export async function POST(req: NextRequest) {
   try {
+    // Debug: Log environment variables (without exposing secrets)
+    console.log("Environment check:", {
+      hasOpenAIKey: !!process.env.OPENAI_API_KEY,
+      hasDatabaseURL: !!process.env.DATABASE_URL,
+      ragModel: process.env.RAG_MODEL || "gpt-4o-mini",
+      nodeEnv: process.env.NODE_ENV
+    });
+
     // Parse request
     const body = await req.json();
     const { query, role = "teacher" } = body;

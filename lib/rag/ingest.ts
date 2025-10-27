@@ -63,15 +63,37 @@ export const SOURCES = [
   "https://sites.google.com/aea9.k12.ia.us/mbaeaatdept/sett-framework",
   "https://mn.gov/admin/at/learning/prek-12/sett-framework.jsp",
 
-  // --- Category 3: Free AT Tools ---
+  // --- Category 2: Comprehensive AT Resources ---
   "https://www.edutopia.org/article/free-assistive-tech-tools-support-academic-success/",
-  "https://ssd.umich.edu/article/assistive-technology-resources",
   "https://www.education.uw.edu/tlh/assistive-technology/assistive-technology-links/",
   "https://www.teachingchannel.com/k12-hub/blog/assistive-technology-tools-for-your-classroom/",
+  "https://www.readingrockets.org/topics/assistive-technology",
+  "https://www.ldonline.org/ld-topics/assistive-technology",
+  "https://www.understood.org/en/school-learning/assistive-technology",
+  "https://www.greatschools.org/gk/articles/assistive-technology/",
+  "https://www.schools.nyc.gov/learning/special-education/programs-and-services/assistive-technology",
 
-  // --- Category 4: Iowa Specific ---
+  // --- Category 3: Iowa Specific ---
   "https://educate.iowa.gov/pk-12/special-education/programs-services/assistive-technology",
   "https://iowaaea.org/community-partners/special-education-services/assistive-technology/",
+  "https://www.centralriversaea.org/educators/special-education/assistive-technology/",
+
+  // --- Category 4: AT Tools and Software ---
+  "https://www.texthelp.com/en-us/products/read-write/",
+  "https://www.donjohnston.com/cowriter/",
+  "https://www.kurzweiledu.com/products/kurzweil-3000.html",
+  "https://www.cricksoft.com/us/clicker",
+  "https://www.ghotit.com/",
+  "https://goqsoftware.com/wordq/",
+  "https://www.naturalreaders.com/",
+  "https://www.voicedream.com/",
+  "https://www.bookshare.org/",
+  "https://learningally.org/",
+
+  // --- Category 5: Research and Best Practices ---
+  "https://www.atia.org/",
+  "https://www.frontiersin.org/journals/education",
+  "https://www.researchgate.net/topic/Assistive-Technology",
 ];
 
 /**
