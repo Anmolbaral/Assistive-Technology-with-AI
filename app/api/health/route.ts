@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
         connected: false,
         documents: 0,
         chunks: 0,
-        error: null
+        error: null as string | null
       }
     };
 
