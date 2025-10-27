@@ -19,17 +19,27 @@ function inferAudiences(url: string): string[] {
   const tags = new Set<string>(["general"]);
   
   // Teacher-focused resources
-  if (u.includes("edutopia") || u.includes("teachingchannel")) {
+  if (u.includes("edutopia") || u.includes("teachingchannel") || 
+      u.includes("leanderisd") || u.includes("morainepark") || 
+      u.includes("uis.edu") || u.includes("helenkeller")) {
     tags.add("teacher");
   }
   
   // AT Specialist-focused resources
-  if (u.includes("frontiersin") || u.includes("atia") || u.includes("mn.gov")) {
+  if (u.includes("frontiersin") || u.includes("atia") || u.includes("mn.gov") ||
+      u.includes("resna") || u.includes("at3center") || u.includes("ataprogram") ||
+      u.includes("icater") || u.includes("infinitec") || u.includes("inglis") ||
+      u.includes("boundlessat") || u.includes("texthelp") || u.includes("dolphin") ||
+      u.includes("nuance") || u.includes("sorenson") || u.includes("audiodirections") ||
+      u.includes("equidox") || u.includes("iowaschoolfortheblind") || 
+      u.includes("iowaschoolforthedeaf")) {
     tags.add("at_specialist");
   }
   
   // Coach-focused resources
-  if (u.includes("professional-learning") || u.includes("coaches") || u.includes("pd")) {
+  if (u.includes("professional-learning") || u.includes("coaches") || u.includes("pd") ||
+      u.includes("cast") || u.includes("udlcenter") || u.includes("247accessibledocuments") ||
+      u.includes("equalweb") || u.includes("verbit")) {
     tags.add("coach");
   }
   
@@ -43,7 +53,19 @@ function inferAudiences(url: string): string[] {
     tags.add("at_specialist"); 
   }
   
-  // SETT Framework resources are useful for all roles
+  // State AT Programs - useful for all roles
+  if (u.includes("cttechact") || u.includes("dati") || u.includes("at4nj") ||
+      u.includes("tap.gcd") || u.includes("traid-program") || u.includes("ncdhhs") ||
+      u.includes("ndipat") || u.includes("atohio") || u.includes("okabletech") ||
+      u.includes("accesstechnologiesinc") || u.includes("temple.edu") || 
+      u.includes("atap.ri") || u.includes("sc.edu") || u.includes("dakotalink") ||
+      u.includes("ttap.html") || u.includes("techaccess.edb")) {
+    tags.add("teacher");
+    tags.add("at_specialist");
+    tags.add("coach");
+  }
+  
+  // SETT Framework and foundational resources - useful for all roles
   if (u.includes("sett") || u.includes("joyzabala")) {
     tags.add("teacher");
     tags.add("at_specialist");
@@ -94,6 +116,53 @@ export const SOURCES = [
   "https://www.atia.org/",
   "https://www.frontiersin.org/journals/education",
   "https://www.researchgate.net/topic/Assistive-Technology",
+
+  // --- Category 6: Top-Tier AT Organizations & Agencies ---
+  "https://www.cast.org/",
+  "https://udlcenter.org/",
+  "https://www.resna.org/",
+  "https://at3center.net/",
+  "https://www.ataprogram.org/",
+  "https://www.joyzabala.com/",
+  "https://www.icater.org/",
+  "https://www.infinitec.org/",
+  "https://www.inglis.org/",
+  "https://www.boundlessat.com/",
+  "https://www.texthelp.com/",
+  "https://www.dolphin.com/",
+  "https://www.nuance.com/dragon.html",
+  "https://www.sorenson.com/",
+  "https://www.247accessibledocuments.com/",
+  "https://www.equalweb.com/",
+  "https://verbit.ai/",
+  "https://www.audiodirections.com/",
+  "https://www.equidox.com/",
+
+  // --- Category 7: State AT Programs (Top States) ---
+  "https://www.cttechact.com/",
+  "https://www.dati.org/",
+  "https://at4nj.org/",
+  "https://www.tap.gcd.state.nm.us/",
+  "https://www.justicecenter.ny.gov/traid-program",
+  "https://www.ncdhhs.gov/divisions/vocational-rehabilitation-services/north-carolina-assistive-technology-program",
+  "https://www.ndipat.org/",
+  "https://www.atohio.org/",
+  "https://www.okabletech.org/",
+  "https://www.accesstechnologiesinc.org/",
+  "https://www.temple.edu/instituteondisabilities/",
+  "https://www.atap.ri.gov/",
+  "https://www.sc.edu/scatp",
+  "https://www.dakotalink.net/",
+  "https://www.tn.gov/humanservices/ds/ttap.html",
+  "https://techaccess.edb.utexas.edu/",
+
+  // --- Category 8: Educational AT Centers ---
+  "https://www.helenkeller.org/",
+  "https://www.leanderisd.org/",
+  "https://www.morainepark.edu/",
+  "https://www.uis.edu/",
+  "https://www.iowaschoolfortheblind.org/",
+  "https://www.iowaschoolforthedeaf.org/",
 ];
 
 /**

@@ -29,7 +29,16 @@ export default function HomePage() {
         <div className="flex justify-between items-center mb-4">
           <div className="flex-1">
             <h1 className="text-3xl font-bold" tabIndex={-1}>
-              {mounted ? cfg.banner : "Welcome! Please select your role above."}
+              {mounted ? (
+                cfg.banner.split('\n').map((line, index) => (
+                  <span key={index}>
+                    {line}
+                    {index < cfg.banner.split('\n').length - 1 && <br />}
+                  </span>
+                ))
+              ) : (
+                "Welcome! Please select your role above."
+              )}
             </h1>
           </div>
           <RolePicker />

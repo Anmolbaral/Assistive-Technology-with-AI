@@ -11,7 +11,7 @@ export type RoleConfig = {
 export const ROLES: Record<RoleKey, RoleConfig> = {
   teacher: {
     label: "Teacher",
-    banner: "Welcome, Teachers! Get actionable, privacy-safe AT solutions — fast.",
+    banner: "Welcome, Teachers!\nGet actionable, privacy-safe AT solutions — fast.",
     sampleQueries: [
       "What free text-to-speech tools work with Google Classroom?",
       "How do I support a third grader with dysgraphia in writing tasks?",
@@ -34,7 +34,7 @@ export const ROLES: Record<RoleKey, RoleConfig> = {
   },
   at_specialist: {
     label: "AT Specialist",
-    banner: "Welcome, AT Specialist! Dive deep into the evidence for every major AT tool.",
+    banner: "Welcome, AT Specialist!\nDive deep into the evidence for every major AT tool.",
     sampleQueries: [
       "Show research comparing Proloquo2Go vs. Snap+Core for high school AAC use (2024–25).",
       "SETT analysis template for multi-disability support planning.",
@@ -56,7 +56,7 @@ export const ROLES: Record<RoleKey, RoleConfig> = {
   },
   coach: {
     label: "Instructional/Technology Coach",
-    banner: "Welcome, Coach! Build excitement and capacity for AT across your school.",
+    banner: "Welcome, Coach!\nBuild excitement and capacity for AT across your school.",
     sampleQueries: [
       "Give me a 30-minute PD agenda for introducing AT to K–6 teachers.",
       "Model script for coaching a teacher on speech-to-text tools.",
