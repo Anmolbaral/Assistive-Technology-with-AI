@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import { brand } from "@/lib/theme";
 import Link from "next/link";
 import ClientFocusHandler from "@/components/ClientFocusHandler";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -129,6 +130,9 @@ export default function RootLayout({
           aria-live="polite"
           aria-atomic="true"
         />
+
+        {/* Vercel Analytics */}
+        <Analytics />
       </body>
     </html>
   );
