@@ -28,22 +28,22 @@ When used responsibly, AI-powered AT resource discovery offers significant advan
 
 <FeatureGrid features={[
   {
-    icon: "🚀",
+    iconKey: "zap",
     title: "Instant Access to Relevant Resources",
     description: "No more endless Google searches or outdated bookmark folders. Ask a question in plain language and get targeted recommendations immediately."
   },
   {
-    icon: "⏱️",
+    iconKey: "clock",
     title: "Time Saved on Research and Planning",
     description: "What used to take 30-60 minutes of research can happen in under 2 minutes, freeing you to focus on implementation and student support."
   },
   {
-    icon: "🎯",
+    iconKey: "target",
     title: "Personalized Support for Diverse Learner Needs",
     description: "Describe your specific classroom context—grade level, available devices, student challenges—and get recommendations tailored to your situation."
   },
   {
-    icon: "📚",
+    iconKey: "book",
     title: "Evidence-Based Recommendations",
     description: "Our AI draws from vetted sources: SETT Framework documentation, Iowa Department of Education guidance, and trusted educational technology sites."
   }
@@ -87,22 +87,22 @@ TechBridge Learning has built this AI assistant with privacy as the foundation, 
 
 <FeatureGrid features={[
   {
-    icon: "🔒",
+    iconKey: "lock",
     title: "Queries Stay Within Our Secure Systems",
     description: "When you ask a question, it's processed on our secure infrastructure. We don't use external AI services that might log or train on your data."
   },
   {
-    icon: "🚷",
+    iconKey: "shield",
     title: "No Student Data Enters the AI",
     description: "You should never include student names, IDs, photos, IEP details, or other personally identifiable information (PII). The system actively blocks queries containing PII and reminds you of safe alternatives."
   },
   {
-    icon: "📖",
+    iconKey: "book",
     title: "Transparent Citations",
     description: "Every recommendation includes 2-6 source links so you can verify information, dive deeper, and share resources with colleagues."
   },
   {
-    icon: "👨‍🏫",
+    iconKey: "user",
     title: "Teachers Remain Decision-Makers",
     description: "AI provides options; you make the final call. You know your students, your classroom environment, and your school's resources better than any algorithm."
   }
@@ -114,12 +114,12 @@ TechBridge Learning has built this AI assistant with privacy as the foundation, 
 
 <ProsConsCard 
   bad={{
-    title: "❌ Unsafe Query",
+    title: "Unsafe Query",
     example: "What tools can help Sarah Martinez (IEP #4532) with her reading challenges?",
     reason: "Includes student name and IEP number—PII that violates FERPA."
   }}
   good={{
-    title: "✅ Safe Query",
+    title: "Safe Query",
     example: "What are low-tech and mid-tech AT tools for a 3rd-grade student with decoding challenges during independent reading?",
     reason: "Describes the challenge, context, and task without identifying any specific student."
   }}

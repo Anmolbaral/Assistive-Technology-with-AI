@@ -48,7 +48,7 @@ cd assistiveTechnology
 pnpm install
 
 # 3. Copy environment variables
-cp .env.example .env
+cp env.template .env.local
 
 # 4. Add your credentials to .env
 # - OPENAI_API_KEY

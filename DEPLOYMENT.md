@@ -75,7 +75,7 @@ Set up your environment variables locally:
 
 ```bash
 # Create .env.local (not committed to git)
-cp .env.example .env.local
+cp env.template .env.local
 
 # Edit .env.local with your credentials
 OPENAI_API_KEY=sk-...
@@ -242,6 +242,18 @@ Set up monitoring (e.g., UptimeRobot, Better Stack) to ping:
 1. Edit MDX files in `content/`
 2. Commit and push to GitHub
 3. Vercel auto-deploys changes
+
+### Supabase Free Tier: Prevent Pausing
+
+Supabase pauses free-tier projects after 7 days of inactivity. A GitHub Actions workflow (`.github/workflows/keep-supabase-active.yml`) pings `/api/health` daily to keep the project active.
+
+**Required setup:** Add a repository secret in GitHub:
+1. Go to your repo → **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret**
+3. Name: `HEALTH_CHECK_URL`
+4. Value: your production URL (e.g. `https://your-app.vercel.app`)
+
+You can manually trigger the workflow from the **Actions** tab to test it.
 
 ### Database Backups
 

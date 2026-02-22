@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle } from "lucide-react";
+import { getIcon } from "@/lib/icons";
 
 interface ComparisonRow {
   risk: string;
@@ -86,7 +87,7 @@ export function ComparisonTable({
 
 interface FeatureGridProps {
   features: Array<{
-    icon: string;
+    iconKey: string;
     title: string;
     description: string;
   }>;
@@ -98,15 +99,22 @@ export function FeatureGrid({ features, columns = 2 }: FeatureGridProps) {
 
   return (
     <div className={`grid grid-cols-1 ${gridCols} gap-4 my-6`}>
-      {features.map((feature, idx) => (
+      {features.map((feature, idx) => {
+        const Icon = getIcon(feature.iconKey);
+        return (
         <Card key={idx} className="border-2 hover:border-primary transition-colors">
           <CardContent className="pt-6">
-            <div className="text-3xl mb-3">{feature.icon}</div>
+            {Icon && (
+              <div className="mb-3">
+                <Icon className="h-8 w-8 text-primary" />
+              </div>
+            )}
             <h4 className="font-semibold text-lg mb-2">{feature.title}</h4>
             <p className="text-sm text-muted-foreground">{feature.description}</p>
           </CardContent>
         </Card>
-      ))}
+        );
+      })}
     </div>
   );
 }

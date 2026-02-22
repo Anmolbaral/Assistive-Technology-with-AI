@@ -149,9 +149,6 @@ export function Chat() {
             onChange={(e) => setQuery(e.target.value)}
             disabled={loading}
           />
-          <p className="text-xs text-muted-foreground mt-2">
-            Describe the challenge, environment, and task. Don't include student names.
-          </p>
         </div>
 
         <Button type="submit" disabled={loading || query.trim().length < 5} className="w-full">

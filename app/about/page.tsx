@@ -12,7 +12,8 @@ import {
   Shield,
   ArrowRight,
   CheckCircle,
-  Star
+  Star,
+  Zap
 } from "lucide-react";
 import Link from "next/link";
 
@@ -178,28 +179,40 @@ export default function AboutPage() {
         <CardContent>
           <div className="space-y-6">
             <div>
-              <h3 className="font-semibold mb-2">🎯 Personalized Recommendations</h3>
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <Target className="h-5 w-5 text-primary" />
+                Personalized Recommendations
+              </h3>
               <p className="text-muted-foreground">
                 Our AI analyzes your specific needs and provides tailored assistive technology recommendations, 
                 from low-tech solutions to advanced software tools.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-2">👥 Role-Based Guidance</h3>
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <Users className="h-5 w-5 text-primary" />
+                Role-Based Guidance
+              </h3>
               <p className="text-muted-foreground">
                 Whether you're a teacher, AT specialist, or instructional coach, our assistant adapts its responses 
                 to match your role and expertise level.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-2">📚 Evidence-Based Solutions</h3>
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-primary" />
+                Evidence-Based Solutions
+              </h3>
               <p className="text-muted-foreground">
                 Every recommendation is backed by research and includes citations to trusted sources, ensuring 
                 you have access to proven, effective solutions.
               </p>
             </div>
             <div>
-              <h3 className="font-semibold mb-2">⚡ Instant Support</h3>
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <Zap className="h-5 w-5 text-primary" />
+                Instant Support
+              </h3>
               <p className="text-muted-foreground">
                 Get immediate answers to your AT questions, from simple tool suggestions to complex implementation 
                 strategies, available 24/7.

@@ -81,8 +81,8 @@ function SortableItem({ item, isCorrect }: { item: DragDropItem; isCorrect?: boo
 
 export function DragDrop({ items, onComplete }: DragDropProps) {
   const [columns, setColumns] = useState<Column[]>([
-    { id: "Safe", title: "✅ Safe to Query", items: [] },
-    { id: "Unsafe", title: "🚫 Unsafe (Contains PII)", items: [] },
+    { id: "Safe", title: "Safe to Query", items: [] },
+    { id: "Unsafe", title: "Unsafe (Contains PII)", items: [] },
   ]);
   const [unassigned, setUnassigned] = useState<DragDropItem[]>(items);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -175,8 +175,8 @@ export function DragDrop({ items, onComplete }: DragDropProps) {
   const handleRetry = () => {
     setUnassigned(items);
     setColumns([
-      { id: "Safe", title: "✅ Safe to Query", items: [] },
-      { id: "Unsafe", title: "🚫 Unsafe (Contains PII)", items: [] },
+      { id: "Safe", title: "Safe to Query", items: [] },
+      { id: "Unsafe", title: "Unsafe (Contains PII)", items: [] },
     ]);
     setSubmitted(false);
     announce("Reset drag and drop exercise. Starting over.", 'polite');
@@ -229,7 +229,14 @@ export function DragDrop({ items, onComplete }: DragDropProps) {
                 role="region"
                 aria-label={`${column.title} category`}
               >
-                <h3 className="font-semibold mb-3 text-sm">{column.title}</h3>
+                <h3 className="font-semibold mb-3 text-sm flex items-center gap-2">
+                  {column.id === "Safe" ? (
+                    <CheckCircle2 className="h-4 w-4 text-success" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-destructive" />
+                  )}
+                  {column.title}
+                </h3>
                 <SortableContext
                   items={column.items.map((i) => i.id)}
                   strategy={verticalListSortingStrategy}

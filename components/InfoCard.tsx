@@ -1,20 +1,31 @@
 import { ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
+import { getIcon } from "@/lib/icons";
 
 export interface InfoCardProps {
   title: string;
-  icon?: LucideIcon;
+  icon?: LucideIcon | string;
+  iconKey?: string;
   children: ReactNode;
   variant?: "default" | "success" | "warning" | "info";
 }
 
 export function InfoCard({
   title,
-  icon: Icon,
+  icon: iconProp,
+  iconKey,
   children,
   variant = "default",
 }: InfoCardProps) {
+  const Icon =
+    typeof iconProp === "function"
+      ? iconProp
+      : iconKey
+        ? getIcon(iconKey.toLowerCase())
+        : typeof iconProp === "string"
+          ? getIcon(iconProp.toLowerCase())
+          : undefined;
   const variantStyles = {
     default: "border-border",
     success: "border-success bg-success/5",

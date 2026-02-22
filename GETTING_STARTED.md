@@ -42,7 +42,7 @@ pnpm install
 
 ```bash
 # Create local env file
-cp .env.example .env.local
+cp env.template .env.local
 
 # Edit .env.local with your values:
 # OPENAI_API_KEY=sk-...

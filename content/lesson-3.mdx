@@ -17,7 +17,7 @@ When asking AI for AT recommendations, **never** include:
 
 <IconGrid variant="danger" items={[
   {
-    icon: "📛",
+    iconKey: "user",
     title: "Names",
     items: [
       "Student first names, last names, or nicknames",
@@ -26,7 +26,7 @@ When asking AI for AT recommendations, **never** include:
     ]
   },
   {
-    icon: "🆔",
+    iconKey: "hash",
     title: "Identifiers",
     items: [
       "Student ID numbers",
@@ -36,7 +36,7 @@ When asking AI for AT recommendations, **never** include:
     ]
   },
   {
-    icon: "📸",
+    iconKey: "camera",
     title: "Photos & Media",
     items: [
       "Student photos, videos, or voice recordings",
@@ -45,7 +45,7 @@ When asking AI for AT recommendations, **never** include:
     ]
   },
   {
-    icon: "🏠",
+    iconKey: "mail",
     title: "Contact Information",
     items: [
       "Home addresses",
@@ -54,7 +54,7 @@ When asking AI for AT recommendations, **never** include:
     ]
   },
   {
-    icon: "🩺",
+    iconKey: "file",
     title: "Medical/IEP Details",
     items: [
       "Specific diagnoses linked to names",
@@ -63,7 +63,7 @@ When asking AI for AT recommendations, **never** include:
     ]
   },
   {
-    icon: "📊",
+    iconKey: "chart",
     title: "Grades & Test Scores",
     items: [
       "Student IDs with scores",
@@ -81,7 +81,7 @@ You can (and should!) provide rich context—just keep it general and de-identif
 
 <IconGrid variant="success" items={[
   {
-    icon: "✅",
+    iconKey: "check",
     title: "General Challenges",
     items: [
       "Student with dyslexia",
@@ -90,7 +90,7 @@ You can (and should!) provide rich context—just keep it general and de-identif
     ]
   },
   {
-    icon: "🏫",
+    iconKey: "building",
     title: "Classroom Context",
     items: [
       "General education 3rd-grade classroom",
@@ -99,7 +99,7 @@ You can (and should!) provide rich context—just keep it general and de-identif
     ]
   },
   {
-    icon: "📝",
+    iconKey: "pen",
     title: "Tasks & Goals",
     items: [
       "Write multi-paragraph essays",
@@ -108,7 +108,7 @@ You can (and should!) provide rich context—just keep it general and de-identif
     ]
   },
   {
-    icon: "💻",
+    iconKey: "monitor",
     title: "Environment & Resources",
     items: [
       "iPads and laptops available",
@@ -117,7 +117,7 @@ You can (and should!) provide rich context—just keep it general and de-identif
     ]
   },
   {
-    icon: "🛠️",
+    iconKey: "wrench",
     title: "AT Categories & Preferences",
     items: [
       "Low-tech, low-cost options",
@@ -228,12 +228,12 @@ Before you submit a query to the AI assistant, ask yourself:
 
 <ProsConsCard 
   bad={{
-    title: "❌ Unsafe Original",
+    title: "Unsafe Original",
     example: "What tools can help Sarah Johnson (student ID #4521, IEP for dyslexia) improve her reading fluency? She's in Ms. Garcia's 4th-grade class and scored 35% on the DIBELS assessment.",
     reason: "Problems: Student name (Sarah Johnson), Student ID (#4521), Specific IEP detail linked to name, Teacher name, Specific test score"
   }}
   good={{
-    title: "✅ Safe Revision",
+    title: "Safe Revision",
     example: "What are low-tech and mid-tech AT tools for a 4th-grade student with dyslexia who struggles with reading fluency during independent reading? The classroom has Chromebooks and a small-group reading area.",
     reason: "Why it works: General grade level (4th grade), Challenge described (dyslexia, reading fluency), Context provided (independent reading, Chromebooks), No identifying information"
   }}

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Smile, Frown, ThumbsUp, ThumbsDown, X } from "lucide-react";
+import { Smile, Frown, ThumbsUp, ThumbsDown, X, CheckCircle2 } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 
 interface FeedbackDialogProps {
@@ -75,7 +75,7 @@ export function FeedbackDialog({
       >
         <Card className="w-full max-w-md shadow-2xl animate-in fade-in zoom-in duration-200">
           <CardContent className="pt-12 pb-12 text-center">
-            <div className="text-6xl mb-4">🎉</div>
+            <CheckCircle2 className="h-16 w-16 text-green-600 mx-auto mb-4" />
             <h2 id="feedback-thank-you" className="text-2xl font-bold mb-2">
               Thank you!
             </h2>
