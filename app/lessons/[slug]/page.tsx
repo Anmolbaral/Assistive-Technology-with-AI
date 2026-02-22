@@ -61,7 +61,11 @@ export default async function LessonPage({
 
       {/* Lesson Content */}
       <article className="prose prose-slate max-w-none mb-12">
-        <MDXRemote source={content} components={mdxComponents} />
+        <MDXRemote
+          source={content}
+          components={mdxComponents}
+          options={{ blockJS: false }}
+        />
       </article>
 
       {/* Navigation */}
