@@ -23,8 +23,7 @@ export default function AssistantPage() {
     const completionStatus = isComplete();
     const completionPct = getCompletionPercentage();
     
-    // TESTING: Bypass completion gate
-    setComplete(true); // Change this back to: completionStatus
+    setComplete(completionStatus);
     setPercentage(completionPct);
 
     if (completionStatus) {

@@ -17,12 +17,6 @@ export function useRole(): [RoleKey, RoleConfig, (r: RoleKey) => void] {
     }
   }, []);
 
-  useEffect(() => {
-    if (isClient) {
-      localStorage.setItem(KEY, role);
-    }
-  }, [role, isClient]);
-
   // Listen for role changes from other components
   useEffect(() => {
     if (!isClient) return;
