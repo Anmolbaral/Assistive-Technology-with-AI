@@ -2,7 +2,7 @@
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { Chart } from "./Chart";
+import { Chart } from "@/components/content/Chart";
 import type { Components } from "react-markdown";
 
 interface ChartBlock {

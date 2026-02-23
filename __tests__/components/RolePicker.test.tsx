@@ -20,7 +20,7 @@ vi.mock("@/lib/useRole", () => ({
   },
 }));
 
-import RolePicker from "@/components/RolePicker";
+import RolePicker from "@/components/roles/RolePicker";
 
 describe("RolePicker Component", () => {
   beforeEach(() => {

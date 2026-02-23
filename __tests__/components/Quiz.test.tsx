@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Quiz, type QuizQuestion } from "@/components/Quiz";
+import { Quiz, type QuizQuestion } from "@/components/lessons/Quiz";
 
 vi.mock("@/lib/a11y", () => ({
   announce: vi.fn(),

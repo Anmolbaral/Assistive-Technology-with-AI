@@ -3,14 +3,14 @@
  * Maps MDX content to React components
  */
 
-import { LessonQuiz } from "@/components/LessonQuiz";
-import { DragDrop } from "@/components/DragDrop";
-import { PromptPractice } from "@/components/PromptPractice";
-import { InfoCard } from "@/components/InfoCard";
-import { Video } from "@/components/Video";
-import { Objectives } from "@/components/Objectives";
-import { ComparisonTable, FeatureGrid, ProcessSteps, ProsConsCard } from "@/components/ComparisonTable";
-import { IconGrid } from "@/components/IconGrid";
+import { LessonQuiz } from "@/components/lessons/LessonQuiz";
+import { DragDrop } from "@/components/lessons/DragDrop";
+import { PromptPractice } from "@/components/lessons/PromptPractice";
+import { InfoCard } from "@/components/content/InfoCard";
+import { Video } from "@/components/content/Video";
+import { Objectives } from "@/components/lessons/Objectives";
+import { ComparisonTable, FeatureGrid, ProcessSteps, ProsConsCard } from "@/components/content/ComparisonTable";
+import { IconGrid } from "@/components/content/IconGrid";
 import { Shield, Lightbulb, AlertCircle, Info } from "lucide-react";
 
 /**

@@ -33,7 +33,7 @@ vi.mock("@/lib/analytics", () => ({
   },
 }));
 
-import { LessonQuiz } from "@/components/LessonQuiz";
+import { LessonQuiz } from "@/components/lessons/LessonQuiz";
 
 const questions = [
   {

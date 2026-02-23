@@ -7,10 +7,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Lock, Sparkles } from "lucide-react";
 import { isComplete, getCompletionPercentage } from "@/lib/completion";
-import { Chat } from "@/components/Chat";
+import { Chat } from "@/components/chat/Chat";
 import { analytics } from "@/lib/analytics";
-import RolePicker from "@/components/RolePicker";
-import RoleSelectionDialog from "@/components/RoleSelectionDialog";
+import RolePicker from "@/components/roles/RolePicker";
+import RoleSelectionDialog from "@/components/roles/RoleSelectionDialog";
 import { useRole } from "@/lib/useRole";
 
 export default function AssistantPage() {

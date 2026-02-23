@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { FeedbackDialog } from "@/components/FeedbackDialog";
+import { FeedbackDialog } from "@/components/feedback/FeedbackDialog";
 
 vi.mock("@/lib/analytics", () => ({
   analytics: {

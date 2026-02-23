@@ -1,6 +1,6 @@
 "use client";
 
-import { Quiz, QuizQuestion } from "@/components/Quiz";
+import { Quiz, QuizQuestion } from "@/components/lessons/Quiz";
 import { markLessonComplete, LessonSlug } from "@/lib/completion";
 import { analytics } from "@/lib/analytics";
 import { usePathname } from "next/navigation";

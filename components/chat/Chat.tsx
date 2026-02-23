@@ -8,10 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { Shield, Send, Loader2, ExternalLink, Lightbulb } from "lucide-react";
 import { analytics } from "@/lib/analytics";
 import { announce } from "@/lib/a11y";
-import { FeedbackDialog } from "@/components/FeedbackDialog";
+import { FeedbackDialog } from "@/components/feedback/FeedbackDialog";
 import { shouldShowFeedback, markFeedbackShown, startEngagementTracking } from "@/lib/feedback";
 import { isComplete } from "@/lib/completion";
-import { MarkdownText } from "@/components/MarkdownText";
+import { MarkdownText } from "@/components/chat/MarkdownText";
 import { useRole } from "@/lib/useRole";
 
 interface ChatResponse {

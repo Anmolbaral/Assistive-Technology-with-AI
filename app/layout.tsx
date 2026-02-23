@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import { brand } from "@/lib/theme";
 import Link from "next/link";
-import ClientFocusHandler from "@/components/ClientFocusHandler";
+import ClientFocusHandler from "@/components/content/ClientFocusHandler";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });

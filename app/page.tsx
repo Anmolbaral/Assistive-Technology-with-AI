@@ -6,8 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, Lock, BookOpen, Target } from "lucide-react";
 import { lessons } from "@/lib/lessons";
-import RolePicker from "@/components/RolePicker";
-import RoleSelectionDialog from "@/components/RoleSelectionDialog";
+import RolePicker from "@/components/roles/RolePicker";
+import RoleSelectionDialog from "@/components/roles/RoleSelectionDialog";
 import { useRole } from "@/lib/useRole";
 
 export default function HomePage() {

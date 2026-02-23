@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { analytics } from "@/lib/analytics";
-import { FeedbackDialog } from "@/components/FeedbackDialog";
+import { FeedbackDialog } from "@/components/feedback/FeedbackDialog";
 import { isComplete, getCompletionPercentage } from "@/lib/completion";
 import { shouldShowFeedback, markFeedbackShown, startEngagementTracking } from "@/lib/feedback";
 
