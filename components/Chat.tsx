@@ -190,10 +190,10 @@ export function Chat() {
       {/* Response */}
       {response && (
         <div className="space-y-6" role="region" aria-label="Assistant response">
-          <Card>
+          <Card className="border-l-4 border-l-primary">
             <CardContent className="pt-6">
-              <h3 className="font-semibold text-lg mb-3">Answer</h3>
-              <div className="text-muted-foreground leading-7 prose prose-sm max-w-none" role="article" aria-live="polite">
+              <h3 className="font-semibold text-xl mb-4">Answer</h3>
+              <div className="text-foreground leading-7 prose prose-sm max-w-none" role="article" aria-live="polite">
                 <MarkdownText text={response.answer} />
               </div>
             </CardContent>
@@ -205,19 +205,22 @@ export function Chat() {
               <CardContent className="pt-6">
                 <h3 className="font-semibold text-lg mb-4">Recommendations by Tech Level</h3>
                 <div aria-live="polite" aria-atomic="true">
-                <div className="space-y-6">
+                <div className="divide-y divide-border">
                   {response.recommendations.map((rec, idx) => (
-                    <div key={idx}>
-                      <Badge variant="outline" className="mb-2">
+                    <div key={idx} className={idx > 0 ? "pt-5" : ""}>
+                      <Badge variant="outline" className="mb-3">
                         {rec.level}
                       </Badge>
-                      <ul className="list-disc list-inside space-y-1 ml-2">
+                      <div className="space-y-3 mt-2 pb-5">
                         {rec.items.map((item, itemIdx) => (
-                          <li key={itemIdx} className="text-sm">
-                            <MarkdownText text={item} />
-                          </li>
+                          <div key={itemIdx} className="flex items-start gap-3 text-sm">
+                            <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground shrink-0" aria-hidden="true" />
+                            <div className="min-w-0 flex-1">
+                              <MarkdownText text={item} />
+                            </div>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     </div>
                   ))}
                 </div>
