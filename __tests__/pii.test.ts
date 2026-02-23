@@ -24,6 +24,21 @@ describe("PII Scanner", () => {
     it("detects phone numbers", () => {
       expect(scan("Parent phone: 555-123-4567")).toBe(true);
     });
+
+    it("detects first-person name disclosure", () => {
+      expect(scan("My name is Anmol Baruwal, I need AT help for dyslexia")).toBe(
+        true
+      );
+      expect(scan("My name's Johnny Smith and I need reading support")).toBe(
+        true
+      );
+      expect(scan("I'm called Sarah, I have dysgraphia")).toBe(true);
+    });
+
+    it("detects age disclosure", () => {
+      expect(scan("I am 12 years old and need help with writing")).toBe(true);
+      expect(scan("I'm 10 and struggle with reading")).toBe(true);
+    });
   });
 
   describe("should allow safe queries", () => {
@@ -40,10 +55,19 @@ describe("PII Scanner", () => {
     });
 
     it("allows SETT-based queries", () => {
-      const query = 
+      const query =
         "What are low-tech and mid-tech AT tools for a 4th-grade student " +
         "with dysgraphia who needs to write essays in a Chromebook classroom?";
       expect(scan(query)).toBe(false);
+    });
+
+    it("allows first-person without PII (general description)", () => {
+      expect(
+        scan("I'm a teacher looking for AT tools for students with dyslexia")
+      ).toBe(false);
+      expect(
+        scan("I need recommendations for 5th graders with ADHD")
+      ).toBe(false);
     });
   });
 });

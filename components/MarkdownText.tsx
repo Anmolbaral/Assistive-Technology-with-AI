@@ -1,306 +1,172 @@
 "use client";
 
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Chart } from "./Chart";
+import type { Components } from "react-markdown";
+
+interface ChartBlock {
+  type: "bar" | "pie" | "line";
+  title: string;
+  data: { label: string; value: number; color?: string }[];
+}
+
+const CHART_PLACEHOLDER_RE = /<!--chart-(\d+)-->/;
 
 /**
- * Enhanced markdown renderer for AI responses
- * Handles links, headers, bold text, lists, horizontal rules, images, and charts
+ * Extract custom ```chart:type blocks from raw text, replacing them
+ * with HTML comment placeholders that survive the markdown parser.
  */
-export function MarkdownText({ text }: { text: string }) {
-  // Split text into lines for processing
-  const lines = text.split('\n');
-  const elements: JSX.Element[] = [];
-  let key = 0;
-  let i = 0;
+function extractCharts(text: string): { cleaned: string; charts: ChartBlock[] } {
+  const charts: ChartBlock[] = [];
+  const cleaned = text.replace(
+    /```chart:(\w+)\n([\s\S]*?)```/g,
+    (_match, chartType: string, body: string) => {
+      const data: ChartBlock["data"] = [];
+      let title = "";
 
-  while (i < lines.length) {
-    const line = lines[i];
-    
-    // Skip empty lines
-    if (line.trim() === '') {
-      elements.push(<br key={key++} />);
-      i++;
-      continue;
-    }
-
-    // Headers (**Header**)
-    if (line.startsWith('**') && line.endsWith('**')) {
-      const headerText = line.slice(2, -2);
-      elements.push(
-        <h3 key={key++} className="text-lg font-semibold mt-6 mb-3 text-foreground">
-          {renderInlineMarkdown(headerText)}
-        </h3>
-      );
-      i++;
-      continue;
-    }
-
-    // Horizontal rules (---)
-    if (line.trim() === '---') {
-      elements.push(<hr key={key++} className="my-6 border-border" />);
-      i++;
-      continue;
-    }
-
-    // List items (- item or 1. item) - group consecutive items
-    if (line.match(/^\s*[-*]\s/) || line.match(/^\s*\d+\.\s/)) {
-      const listItems: JSX.Element[] = [];
-      let isNumberedList = false;
-      
-      // Collect consecutive list items
-      while (i < lines.length && (lines[i].match(/^\s*[-*]\s/) || lines[i].match(/^\s*\d+\.\s/))) {
-        const listLine = lines[i];
-        const isNumbered = listLine.match(/^\s*\d+\.\s/);
-        if (isNumbered) isNumberedList = true;
-        
-        const listText = listLine.replace(/^\s*[-*]\s/, '').replace(/^\s*\d+\.\s/, '');
-        listItems.push(
-          <li key={key++} className="mb-2">
-            {renderInlineMarkdown(listText)}
-          </li>
-        );
-        i++;
-      }
-      
-      // Wrap in ul or ol
-      const ListComponent = isNumberedList ? 'ol' : 'ul';
-      const listClass = isNumberedList ? 'list-decimal list-inside mb-4 space-y-1' : 'list-disc list-inside mb-4 space-y-1';
-      
-      elements.push(
-        <ListComponent key={key++} className={listClass}>
-          {listItems}
-        </ListComponent>
-      );
-      continue;
-    }
-
-    // Images (![alt](url))
-    if (line.match(/^!\[.*\]\(.*\)$/)) {
-      const imageMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
-      if (imageMatch) {
-        const [, alt, src] = imageMatch;
-        elements.push(
-          <div key={key++} className="my-6">
-            <img 
-              src={src} 
-              alt={alt || 'Image'} 
-              className="max-w-full h-auto rounded-lg border shadow-sm"
-              loading="lazy"
-              onError={(e) => {
-                // Fallback for broken images
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const fallback = document.createElement('div');
-                fallback.className = 'p-4 bg-muted rounded-lg text-center text-muted-foreground';
-                fallback.textContent = `Image: ${alt || 'Visual content'}`;
-                target.parentNode?.insertBefore(fallback, target);
-              }}
-            />
-            {alt && (
-              <p className="text-sm text-muted-foreground mt-2 text-center italic">
-                {alt}
-              </p>
-            )}
-          </div>
-        );
-        i++;
-        continue;
-      }
-    }
-
-    // Charts (```chart:type)
-    if (line.match(/^```chart:/)) {
-      const chartType = line.replace('```chart:', '').trim();
-      const chartData: any[] = [];
-      let chartTitle = '';
-      
-      // Collect chart data until closing ```
-      i++;
-      while (i < lines.length && !lines[i].startsWith('```')) {
-        const chartLine = lines[i];
-        
-        // Parse title
-        if (chartLine.startsWith('title:')) {
-          chartTitle = chartLine.replace('title:', '').trim();
-        }
-        // Parse data (label:value:color format)
-        else if (chartLine.includes(':')) {
-          const parts = chartLine.split(':');
+      for (const line of body.split("\n")) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+        if (trimmed.startsWith("title:")) {
+          title = trimmed.replace("title:", "").trim();
+        } else if (trimmed.includes(":")) {
+          const parts = trimmed.split(":");
           if (parts.length >= 2) {
-            chartData.push({
+            data.push({
               label: parts[0].trim(),
               value: parseFloat(parts[1].trim()) || 0,
-              color: parts[2]?.trim() || undefined
+              color: parts[2]?.trim() || undefined,
             });
           }
         }
-        i++;
       }
-      
-      if (chartData.length > 0) {
-        elements.push(
-          <Chart 
-            key={key++} 
-            title={chartTitle || 'Chart'} 
-            data={chartData} 
-            type={chartType as "bar" | "pie" | "line"} 
-          />
-        );
-      }
-      i++;
-      continue;
-    }
 
-    // Tables (| col1 | col2 |)
-    if (line.includes('|') && line.trim().startsWith('|')) {
-      const tableRows: string[][] = [];
-      
-      // Collect table rows
-      while (i < lines.length && lines[i].includes('|') && lines[i].trim().startsWith('|')) {
-        const row = lines[i].split('|').map(cell => cell.trim()).filter(cell => cell !== '');
-        tableRows.push(row);
-        i++;
-      }
-      
-      if (tableRows.length > 0) {
-        const headers = tableRows[0];
-        const dataRows = tableRows.slice(1);
-        
-        elements.push(
-          <div key={key++} className="my-6 overflow-x-auto">
-            <table className="w-full border-collapse border border-border rounded-lg">
-              <thead>
-                <tr className="bg-muted">
-                  {headers.map((header, idx) => (
-                    <th key={idx} className="border border-border px-4 py-2 text-left font-semibold">
-                      {renderInlineMarkdown(header)}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {dataRows.map((row, rowIdx) => (
-                  <tr key={rowIdx} className="hover:bg-muted/50">
-                    {row.map((cell, cellIdx) => (
-                      <td key={cellIdx} className="border border-border px-4 py-2">
-                        {renderInlineMarkdown(cell)}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        );
-      }
-      continue;
+      const idx = charts.length;
+      charts.push({ type: chartType as ChartBlock["type"], title: title || "Chart", data });
+      return `\n\n<!--chart-${idx}-->\n\n`;
     }
+  );
 
-    // Quoted text (speech in scripts) - lines starting with quotes
-    if (line.trim().startsWith('"') && line.trim().endsWith('"')) {
-      elements.push(
-        <blockquote key={key++} className="border-l-4 border-primary/20 pl-4 py-2 mb-4 bg-muted/30 italic">
-          {renderInlineMarkdown(line.trim().slice(1, -1))}
-        </blockquote>
-      );
-      i++;
-      continue;
+  return { cleaned, charts };
+}
+
+const components: Components = {
+  h1: ({ children }) => (
+    <h1 className="text-xl font-semibold mt-6 mb-3 text-foreground">{children}</h1>
+  ),
+  h2: ({ children }) => (
+    <h2 className="text-lg font-semibold mt-6 mb-3 text-foreground">{children}</h2>
+  ),
+  h3: ({ children }) => (
+    <h3 className="text-lg font-semibold mt-6 mb-3 text-foreground">{children}</h3>
+  ),
+  h4: ({ children }) => (
+    <h4 className="text-base font-semibold mt-4 mb-2 text-foreground">{children}</h4>
+  ),
+  p: ({ children }) => <p className="mb-4 leading-7">{children}</p>,
+  ul: ({ children }) => (
+    <ul className="list-disc list-outside mb-4 space-y-1 pl-5">{children}</ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="list-decimal list-outside mb-4 space-y-1 pl-5">{children}</ol>
+  ),
+  li: ({ children }) => <li className="mb-2">{children}</li>,
+  a: ({ href, children }) => (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-primary hover:text-primary/80 underline transition-colors font-medium"
+    >
+      {children}
+    </a>
+  ),
+  hr: () => <hr className="my-6 border-border" />,
+  blockquote: ({ children }) => (
+    <blockquote className="border-l-4 border-primary/20 pl-4 py-2 mb-4 bg-muted/30 italic">
+      {children}
+    </blockquote>
+  ),
+  table: ({ children }) => (
+    <div className="my-6 overflow-x-auto">
+      <table className="w-full border-collapse border border-border rounded-lg">
+        {children}
+      </table>
+    </div>
+  ),
+  thead: ({ children }) => <thead className="bg-muted">{children}</thead>,
+  th: ({ children }) => (
+    <th className="border border-border px-4 py-2 text-left font-semibold">{children}</th>
+  ),
+  td: ({ children }) => (
+    <td className="border border-border px-4 py-2">{children}</td>
+  ),
+  tr: ({ children }) => <tr className="hover:bg-muted/50">{children}</tr>,
+  img: ({ src, alt }) => (
+    <span className="block my-6">
+      <img
+        src={src}
+        alt={alt || "Image"}
+        className="max-w-full h-auto rounded-lg border shadow-sm"
+        loading="lazy"
+      />
+      {alt && (
+        <span className="block text-sm text-muted-foreground mt-2 text-center italic">
+          {alt}
+        </span>
+      )}
+    </span>
+  ),
+  pre: ({ children }) => (
+    <pre className="bg-muted rounded-lg p-4 overflow-x-auto my-4 text-sm">{children}</pre>
+  ),
+  code: ({ className, children }) => {
+    const isBlock = className?.startsWith("language-");
+    if (isBlock) {
+      return <code className="text-sm">{children}</code>;
     }
-
-    // Regular paragraphs
-    elements.push(
-      <p key={key++} className="mb-4 leading-7">
-        {renderInlineMarkdown(line)}
-      </p>
+    return (
+      <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>
     );
-    i++;
+  },
+};
+
+export function MarkdownText({ text }: { text: string }) {
+  const { cleaned, charts } = extractCharts(text);
+
+  if (charts.length === 0) {
+    return (
+      <div className="space-y-2">
+        <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+          {cleaned}
+        </ReactMarkdown>
+      </div>
+    );
   }
 
-  return <div className="space-y-2">{elements}</div>;
+  // Split on chart placeholders and interleave markdown + charts
+  const segments = cleaned.split(/(<!--chart-\d+-->)/);
+  return (
+    <div className="space-y-2">
+      {segments.map((segment, idx) => {
+        const chartMatch = segment.match(CHART_PLACEHOLDER_RE);
+        if (chartMatch) {
+          const chartIdx = parseInt(chartMatch[1], 10);
+          const chart = charts[chartIdx];
+          if (chart && chart.data.length > 0) {
+            return <Chart key={`chart-${idx}`} title={chart.title} data={chart.data} type={chart.type} />;
+          }
+          return null;
+        }
+        const trimmed = segment.trim();
+        if (!trimmed) return null;
+        return (
+          <ReactMarkdown key={`md-${idx}`} remarkPlugins={[remarkGfm]} components={components}>
+            {trimmed}
+          </ReactMarkdown>
+        );
+      })}
+    </div>
+  );
 }
-
-/**
- * Render inline markdown (links, bold, italic)
- */
-function renderInlineMarkdown(text: string): JSX.Element[] {
-  const parts: Array<{ type: "text" | "link" | "bold" | "italic"; content: string; url?: string }> = [];
-  let lastIndex = 0;
-
-  // Process links first: [text](url)
-  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-  let match;
-
-  while ((match = linkRegex.exec(text)) !== null) {
-    // Add text before the link
-    if (match.index > lastIndex) {
-      const beforeText = text.substring(lastIndex, match.index);
-      parts.push({ type: "text", content: beforeText });
-    }
-
-    // Add the link
-    parts.push({
-      type: "link",
-      content: match[1],
-      url: match[2],
-    });
-
-    lastIndex = match.index + match[0].length;
-  }
-
-  // Add remaining text
-  if (lastIndex < text.length) {
-    parts.push({
-      type: "text",
-      content: text.substring(lastIndex),
-    });
-  }
-
-  // Process bold and italic in the text parts
-  const processedParts: JSX.Element[] = [];
-  let partKey = 0;
-
-  for (const part of parts) {
-    if (part.type === "link") {
-      processedParts.push(
-        <a
-          key={partKey++}
-          href={part.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:text-primary/80 underline transition-colors font-medium"
-        >
-          {part.content}
-        </a>
-      );
-    } else {
-      // Process bold (**text**) and italic (*text*) in text content
-      const textContent = part.content;
-      const boldRegex = /\*\*([^*]+)\*\*/g;
-      const italicRegex = /\*([^*]+)\*/g;
-      
-      let processedText = textContent;
-      let textKey = 0;
-
-      // Replace bold text
-      processedText = processedText.replace(boldRegex, (match, content) => {
-        return `<strong>${content}</strong>`;
-      });
-
-      // Replace italic text
-      processedText = processedText.replace(italicRegex, (match, content) => {
-        return `<em>${content}</em>`;
-      });
-
-      processedParts.push(
-        <span 
-          key={partKey++} 
-          dangerouslySetInnerHTML={{ __html: processedText }}
-        />
-      );
-    }
-  }
-
-  return processedParts;
-}
-
-
