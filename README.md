@@ -322,5 +322,3 @@ curl https://your-domain.com/api/health
 
 ---
 
-**Built with ❤️ for K-12 educators by TechBridge Learning**
-

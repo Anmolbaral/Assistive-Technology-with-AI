@@ -34,17 +34,17 @@ describe("Embedding Provider", () => {
       expect(result).toBe(JSON.stringify(fakeVector));
     });
 
-    it("calls OpenAI with the correct input", async () => {
+    it("calls OpenAI with the correct input and model", async () => {
       createMock.mockResolvedValueOnce({
         data: [{ embedding: [0.1] }],
       });
 
       await embed("hello world");
-      expect(createMock).toHaveBeenCalledWith(
-        expect.objectContaining({
-          input: "hello world",
-        })
-      );
+      const callArgs = createMock.mock.calls[0][0];
+      expect(callArgs.input).toBe("hello world");
+      expect(callArgs.model).toBeDefined();
+      expect(typeof callArgs.model).toBe("string");
+      expect(callArgs.model.length).toBeGreaterThan(0);
     });
 
     it("truncates input longer than 8000 characters", async () => {

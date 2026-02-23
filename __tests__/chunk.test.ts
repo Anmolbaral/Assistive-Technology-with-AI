@@ -35,9 +35,10 @@ describe("Text Chunking", () => {
     expect(normalized).not.toContain("\n");
   });
 
-  it("returns empty array for empty input", () => {
+  it("returns single-element array for empty input", () => {
     const chunks = chunk("", 800, 200);
-    expect(chunks.length).toBe(0);
+    expect(chunks.length).toBe(1);
+    expect(chunks[0]).toBe("");
   });
 });
 

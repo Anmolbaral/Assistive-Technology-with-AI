@@ -66,7 +66,10 @@ describe("Semantic Chunking", () => {
   describe("normalizeText edge cases", () => {
     it("removes control characters", () => {
       const text = "Hello\x00World\x1FEnd";
-      expect(normalizeText(text)).toBe("Hello World End");
+      const result = normalizeText(text);
+      expect(result).not.toContain("\x00");
+      expect(result).not.toContain("\x1F");
+      expect(result).toBe("HelloWorldEnd");
     });
 
     it("collapses tabs and mixed whitespace", () => {

@@ -183,25 +183,33 @@ describe("Accessibility Utilities", () => {
   });
 
   describe("prefersReducedMotion", () => {
-    it("returns a boolean", () => {
-      expect(typeof prefersReducedMotion()).toBe("boolean");
+    beforeEach(() => {
+      window.matchMedia = vi.fn();
+    });
+
+    it("returns true when user prefers reduced motion", () => {
+      (window.matchMedia as ReturnType<typeof vi.fn>).mockReturnValue({ matches: true });
+      expect(prefersReducedMotion()).toBe(true);
+    });
+
+    it("returns false when user does not prefer reduced motion", () => {
+      (window.matchMedia as ReturnType<typeof vi.fn>).mockReturnValue({ matches: false });
+      expect(prefersReducedMotion()).toBe(false);
     });
   });
 
   describe("getAnimationDuration", () => {
-    it("returns 1ms when reduced motion is preferred", () => {
-      vi.spyOn(window, "matchMedia").mockReturnValue({
-        matches: true,
-      } as MediaQueryList);
+    beforeEach(() => {
+      window.matchMedia = vi.fn();
+    });
 
+    it("returns 1ms when reduced motion is preferred", () => {
+      (window.matchMedia as ReturnType<typeof vi.fn>).mockReturnValue({ matches: true });
       expect(getAnimationDuration(300)).toBe(1);
     });
 
     it("returns the default when reduced motion is not preferred", () => {
-      vi.spyOn(window, "matchMedia").mockReturnValue({
-        matches: false,
-      } as MediaQueryList);
-
+      (window.matchMedia as ReturnType<typeof vi.fn>).mockReturnValue({ matches: false });
       expect(getAnimationDuration(300)).toBe(300);
     });
   });

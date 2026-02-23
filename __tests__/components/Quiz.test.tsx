@@ -133,7 +133,7 @@ describe("Quiz Component", () => {
     fireEvent.click(screen.getByText("Teacher salaries"));
     fireEvent.click(screen.getByText("Submit Quiz"));
 
-    expect(screen.getByText(/0%/)).toBeInTheDocument();
+    expect(screen.getByText(/Score: 0%/)).toBeInTheDocument();
     expect(screen.getByText("Retry Quiz")).toBeInTheDocument();
     expect(onComplete).toHaveBeenCalledWith(false, 0);
   });

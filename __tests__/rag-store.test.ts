@@ -1,16 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
-const mockQuery = vi.fn();
+const mockQuery = vi.hoisted(() => vi.fn());
 
-vi.mock("pg", () => {
-  return {
-    default: {
-      Pool: class {
-        query = mockQuery;
-      },
+vi.mock("pg", () => ({
+  default: {
+    Pool: class {
+      query = mockQuery;
     },
-  };
-});
+  },
+}));
 
 vi.mock("dotenv", () => ({
   config: vi.fn(),
@@ -58,30 +56,34 @@ describe("Vector Store", () => {
   });
 
   describe("search", () => {
-    it("returns results from vector similarity query", async () => {
+    it("passes JSON-stringified embedding and limit to the query", async () => {
       const fakeRows = [
         { content: "AT tools for reading", url: "https://example.com", title: "AT Guide", score: 0.95 },
       ];
       mockQuery.mockResolvedValueOnce({ rows: fakeRows });
 
-      const results = await search([0.1, 0.2, 0.3], 5);
+      const embedding = [0.1, 0.2, 0.3];
+      const results = await search(embedding, 5);
 
       expect(results).toEqual(fakeRows);
-      expect(mockQuery).toHaveBeenCalledWith(
-        expect.stringContaining("ORDER BY"),
-        [JSON.stringify([0.1, 0.2, 0.3]), 5]
-      );
+
+      const [queryStr, params] = mockQuery.mock.calls[0];
+      expect(queryStr).toContain("ORDER BY");
+      expect(queryStr).toContain("<=>"); // vector distance operator
+      expect(queryStr).toContain("$1::vector");
+      expect(params[0]).toBe(JSON.stringify(embedding));
+      expect(params[1]).toBe(5);
     });
 
-    it("defaults to k=8", async () => {
+    it("defaults to k=8 when not specified", async () => {
       mockQuery.mockResolvedValueOnce({ rows: [] });
       await search([0.1]);
 
-      const args = mockQuery.mock.calls[0][1];
-      expect(args[1]).toBe(8);
+      const params = mockQuery.mock.calls[0][1];
+      expect(params[1]).toBe(8);
     });
 
-    it("throws on database error", async () => {
+    it("throws 'Search failed' on database error", async () => {
       mockQuery.mockRejectedValueOnce(new Error("timeout"));
       const spy = vi.spyOn(console, "error").mockImplementation(() => {});
 
@@ -91,17 +93,27 @@ describe("Vector Store", () => {
   });
 
   describe("searchWithRole", () => {
-    it("performs role-aware search with audience boost", async () => {
+    it("passes embedding, role, and limit to the role-aware query", async () => {
       const fakeRows = [
         { content: "Teacher AT", url: "https://example.com", title: "Guide", audiences: ["teacher"], rank: 0.05 },
       ];
       mockQuery.mockResolvedValueOnce({ rows: fakeRows });
 
-      const results = await searchWithRole([0.1], "teacher", 5);
+      const embedding = [0.1, 0.2];
+      const results = await searchWithRole(embedding, "teacher", 5);
 
+      // Verify query params: $1=embedding, $2=role, $3=limit
+      const [queryStr, params] = mockQuery.mock.calls[0];
+      expect(params[0]).toBe(JSON.stringify(embedding));
+      expect(params[1]).toBe("teacher");
+      expect(params[2]).toBe(5);
+      expect(queryStr).toContain("audiences"); // role-aware query references audiences
+
+      // Verify score is computed from rank (1 - rank)
       expect(results).toHaveLength(1);
+      expect(results[0].score).toBeCloseTo(1 - 0.05);
       expect(results[0].content).toBe("Teacher AT");
-      expect(typeof results[0].score).toBe("number");
+      expect(results[0].url).toBe("https://example.com");
     });
 
     it("falls back to regular search when role query fails", async () => {
@@ -115,6 +127,12 @@ describe("Vector Store", () => {
 
       const results = await searchWithRole([0.1], "coach", 3);
 
+      // First call was the role query (failed), second is the fallback search
+      expect(mockQuery).toHaveBeenCalledTimes(2);
+      const fallbackParams = mockQuery.mock.calls[1][1];
+      expect(fallbackParams[0]).toBe(JSON.stringify([0.1])); // embedding passed to fallback
+      expect(fallbackParams[1]).toBe(3); // limit passed through
+
       expect(results).toHaveLength(1);
       expect(results[0].content).toBe("Fallback");
       spy.mockRestore();
@@ -122,14 +140,19 @@ describe("Vector Store", () => {
   });
 
   describe("upsertDocument", () => {
-    it("inserts a document and returns its ID", async () => {
+    it("passes url, title, and audiences to the insert query", async () => {
       mockQuery.mockResolvedValueOnce({ rows: [{ id: 42 }] });
 
-      const id = await upsertDocument("https://example.com", "Test Doc", ["teacher"]);
+      const id = await upsertDocument("https://example.com", "Test Doc", ["teacher", "coach"]);
       expect(id).toBe(42);
+
+      const params = mockQuery.mock.calls[0][1];
+      expect(params[0]).toBe("https://example.com");
+      expect(params[1]).toBe("Test Doc");
+      expect(params[2]).toEqual(["teacher", "coach"]);
     });
 
-    it("falls back to basic insert if audiences column is missing", async () => {
+    it("falls back to basic insert (without audiences) when column missing", async () => {
       const spy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
       mockQuery
@@ -138,7 +161,12 @@ describe("Vector Store", () => {
 
       const id = await upsertDocument("https://example.com", "Test");
       expect(id).toBe(7);
-      expect(mockQuery).toHaveBeenCalledTimes(2);
+
+      // Fallback query only passes url and title (no audiences)
+      const fallbackParams = mockQuery.mock.calls[1][1];
+      expect(fallbackParams).toHaveLength(2);
+      expect(fallbackParams[0]).toBe("https://example.com");
+      expect(fallbackParams[1]).toBe("Test");
       spy.mockRestore();
     });
   });
