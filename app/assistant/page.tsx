@@ -15,21 +15,28 @@ import { useRole } from "@/lib/useRole";
 
 export default function AssistantPage() {
   const router = useRouter();
+  const [ready, setReady] = useState(false);
   const [complete, setComplete] = useState(false);
   const [percentage, setPercentage] = useState(0);
   const [role, cfg] = useRole();
 
   useEffect(() => {
-    const completionStatus = isComplete();
-    const completionPct = getCompletionPercentage();
-    
-    setComplete(completionStatus);
-    setPercentage(completionPct);
+    const refresh = () => {
+      const done = isComplete();
+      setComplete(done);
+      setPercentage(getCompletionPercentage());
+      if (done) analytics.assistantOpened();
+    };
+    refresh();
+    setReady(true);
 
-    if (completionStatus) {
-      analytics.assistantOpened();
-    }
+    window.addEventListener("storage", refresh);
+    return () => window.removeEventListener("storage", refresh);
   }, []);
+
+  if (!ready) {
+    return null;
+  }
 
   if (!complete) {
     return (

@@ -129,12 +129,24 @@ export function markComplete(): void {
 }
 
 /**
- * Check if training is complete (gates assistant access)
+ * Check if training is complete (gates assistant access).
+ * Self-heals: if every lesson quiz is passed but the completion flag
+ * was never written (e.g. tab closed mid-save), set it now.
  */
 export function isComplete(): boolean {
   if (typeof window === "undefined") return false;
   migrateLegacyIfNeeded();
-  return localStorage.getItem(COMPLETION_KEY) === "1";
+
+  if (localStorage.getItem(COMPLETION_KEY) === "1") return true;
+
+  const allDone = LESSON_SLUGS.every((slug) => isLessonComplete(slug));
+  if (allDone) {
+    localStorage.setItem(COMPLETION_KEY, "1");
+    notifyProgressListeners();
+    return true;
+  }
+
+  return false;
 }
 
 /**
