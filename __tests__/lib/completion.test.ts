@@ -23,12 +23,26 @@ describe("Completion & Progress Tracking", () => {
 
     it("returns stored progress", () => {
       const data = { "responsible-ai": { slug: "responsible-ai", completed: true, quizPassed: true } };
-      localStorage.setItem("aea-training-progress", JSON.stringify(data));
+      localStorage.setItem("techbridge-training-progress", JSON.stringify(data));
       expect(getProgress()).toEqual(data);
     });
 
-    it("returns empty object for corrupted JSON", () => {
+    it("migrates legacy aea-training-progress on read", () => {
+      const data = { "responsible-ai": { slug: "responsible-ai", completed: true, quizPassed: true } };
+      localStorage.setItem("aea-training-progress", JSON.stringify(data));
+      expect(getProgress()).toEqual(data);
+      expect(localStorage.getItem("techbridge-training-progress")).toBe(JSON.stringify(data));
+      expect(localStorage.getItem("aea-training-progress")).toBeNull();
+    });
+
+    it("does not migrate invalid legacy JSON", () => {
       localStorage.setItem("aea-training-progress", "not-json{{{");
+      expect(getProgress()).toEqual({});
+      expect(localStorage.getItem("techbridge-training-progress")).toBeNull();
+    });
+
+    it("returns empty object for corrupted JSON on current key", () => {
+      localStorage.setItem("techbridge-training-progress", "not-json{{{");
       expect(getProgress()).toEqual({});
     });
   });
@@ -96,6 +110,13 @@ describe("Completion & Progress Tracking", () => {
       markComplete();
       expect(isComplete()).toBe(true);
     });
+
+    it("migrates legacy completion flag on read", () => {
+      localStorage.setItem("aea-training-complete", "1");
+      expect(isComplete()).toBe(true);
+      expect(localStorage.getItem("techbridge-training-complete")).toBe("1");
+      expect(localStorage.getItem("aea-training-complete")).toBeNull();
+    });
   });
 
   describe("getCompletionPercentage", () => {
@@ -142,6 +163,14 @@ describe("Completion & Progress Tracking", () => {
       resetProgress();
       expect(getProgress()).toEqual({});
       expect(isComplete()).toBe(false);
+    });
+
+    it("clears legacy keys too", () => {
+      localStorage.setItem("aea-training-progress", "{}");
+      localStorage.setItem("aea-training-complete", "1");
+      resetProgress();
+      expect(localStorage.getItem("aea-training-progress")).toBeNull();
+      expect(localStorage.getItem("aea-training-complete")).toBeNull();
     });
   });
 

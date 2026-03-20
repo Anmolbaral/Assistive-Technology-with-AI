@@ -9,7 +9,9 @@
     "lint": "next lint",
     "ingest": "tsx scripts/ingest.ts",
     "test": "vitest",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:integration": "start-server-and-test dev http://localhost:3000 test:integration:run",
+    "test:integration:run": "BASE_URL=http://localhost:3000 vitest run --config vitest.integration.config.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",
@@ -63,6 +65,7 @@
     "postcss": "8.4.49",
     "tsx": "^4.19.2",
     "vite": "^7.3.1",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.3",
+    "start-server-and-test": "^2.0.3"
   }
 }

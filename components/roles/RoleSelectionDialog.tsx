@@ -38,19 +38,12 @@ export default function RoleSelectionDialog() {
   }, []);
 
   const handleRoleSelect = (selectedRole: RoleKey) => {
-    console.log("Selecting role:", selectedRole);
-    
-    // Set localStorage and dispatch event
     localStorage.setItem("techbridge-role", selectedRole);
     sessionStorage.setItem("techbridge-role-selected-session", "true");
-    
-    // Dispatch custom event to notify useRole hook
-    window.dispatchEvent(new CustomEvent('roleChanged', { detail: selectedRole }));
-    
-    // Also call setRole directly
+
+    window.dispatchEvent(new CustomEvent("roleChanged", { detail: selectedRole }));
+
     setRole(selectedRole);
-    
-    console.log("Role set to:", selectedRole, "Banner should be:", ROLES[selectedRole].banner);
     setIsOpen(false);
   };
 
@@ -64,7 +57,8 @@ export default function RoleSelectionDialog() {
             Welcome to TechBridge Learning!
           </CardTitle>
           <p className="text-muted-foreground">
-            To provide you with the most relevant content, please select your role:
+            To tailor examples and resources, pick the role that fits you best. We never collect student
+            names or identifiers—keep all AI questions generic.
           </p>
         </CardHeader>
         

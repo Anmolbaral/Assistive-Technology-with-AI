@@ -4,8 +4,8 @@
  * Run this to populate the vector database with source documents
  * 
  * Usage:
- *   pnpm tsx scripts/ingest.ts
- *   NODE_ENV=production pnpm tsx scripts/ingest.ts
+ *   npm run ingest
+ *   NODE_ENV=production npm run ingest
  */
 
 import { config } from "dotenv";

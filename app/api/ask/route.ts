@@ -5,6 +5,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+import { verifyTrainingComplete } from "@/lib/completion-server";
 import { scan, POLICY_MESSAGE, getHint } from "@/lib/pii";
 import { embed } from "@/lib/rag/embed";
 import { searchWithRole } from "@/lib/rag/store";
@@ -26,6 +27,13 @@ const client = new OpenAI({
  */
 export async function POST(req: NextRequest) {
   try {
+    if (!verifyTrainingComplete(req.cookies)) {
+      return NextResponse.json(
+        { error: "Complete all 4 training lessons to unlock the AI assistant." },
+        { status: 403 }
+      );
+    }
+
     // Debug: Log environment variables (without exposing secrets)
     console.log("Environment check:", {
       hasOpenAIKey: !!process.env.OPENAI_API_KEY,

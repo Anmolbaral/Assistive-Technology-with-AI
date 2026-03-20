@@ -56,7 +56,7 @@ export default function AssistantPage() {
                 View Training Lessons
               </Button>
               <p className="text-sm text-muted-foreground">
-                The training takes approximately 20-25 minutes to complete.
+                The training takes approximately 25 minutes to complete.
               </p>
             </div>
           </CardContent>

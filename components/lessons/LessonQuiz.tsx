@@ -17,9 +17,17 @@ export function LessonQuiz({ questions }: LessonQuizProps) {
 
   const handleComplete = (passed: boolean, score: number) => {
     if (passed && slug) {
-      // Mark lesson as complete
+      // Mark lesson as complete (client-side)
       markLessonComplete(slug, true);
-      
+
+      // Sync progress to server for API gate
+      fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, quizPassed: true }),
+        credentials: "include",
+      }).catch((err) => console.warn("Progress sync failed:", err));
+
       // Track analytics
       analytics.quizCompleted(slug, score);
       analytics.lessonCompleted(slug);

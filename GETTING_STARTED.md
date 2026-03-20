@@ -7,7 +7,7 @@ Welcome! This guide will get you up and running in **under 10 minutes**.
 ## 📋 What You Need
 
 - [ ] Node.js 18+ ([download here](https://nodejs.org))
-- [ ] pnpm package manager: `npm install -g pnpm`
+- [ ] npm (comes with Node.js)
 - [ ] PostgreSQL database with pgvector (free options below)
 - [ ] OpenAI API key ([get one here](https://platform.openai.com/api-keys))
 
@@ -19,7 +19,7 @@ Welcome! This guide will get you up and running in **under 10 minutes**.
 
 ```bash
 cd assistiveTechnology
-pnpm install
+npm install
 ```
 
 ### 2. Set Up Database
@@ -53,7 +53,7 @@ cp env.template .env.local
 
 ```bash
 # This creates tables and indexes content (~5 minutes)
-pnpm tsx scripts/ingest.ts
+npm run ingest
 ```
 
 You should see:
@@ -73,7 +73,7 @@ You should see:
 ### 5. Run Development Server
 
 ```bash
-pnpm dev
+npm run dev
 ```
 
 Open http://localhost:3000 🎉
@@ -102,10 +102,10 @@ Open http://localhost:3000 🎉
 
 ```bash
 # Unit tests
-pnpm test
+npm run test
 
 # E2E tests (requires dev server running)
-pnpm test:e2e
+npm run test:e2e
 ```
 
 ---
@@ -164,7 +164,7 @@ export const SOURCES = [
 ];
 ```
 
-Then re-run: `pnpm tsx scripts/ingest.ts`
+Then re-run: `npm run ingest`
 
 ### Edit Lessons
 MDX files in `content/` can be edited directly. Changes appear on page refresh (hot reload).

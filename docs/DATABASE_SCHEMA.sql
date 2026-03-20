@@ -8,7 +8,7 @@
 -- Usage:
 -- 1. Connect to your database
 -- 2. Run this script to create tables and indexes
--- 3. Run the ingestion script: pnpm tsx scripts/ingest.ts
+-- 3. Run the ingestion script: npm run ingest
 
 -- Enable pgvector extension
 CREATE EXTENSION IF NOT EXISTS vector;

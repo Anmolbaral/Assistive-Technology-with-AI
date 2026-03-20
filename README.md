@@ -6,7 +6,7 @@ A **privacy-first**, **FERPA-compliant** educational platform that trains K-12 e
 
 ## ✨ Features
 
-- **4 Interactive Lessons** (20-25 min total)
+- **4 Interactive Lessons** (~25 minutes total)
   - Responsible AI in K-12 Education
   - Prompt Engineering with the SETT Framework
   - Student Data Privacy & AI (FERPA/COPPA)
@@ -34,7 +34,7 @@ A **privacy-first**, **FERPA-compliant** educational platform that trains K-12 e
 
 ### Prerequisites
 
-- Node.js 18+ and pnpm
+- Node.js 18+ and npm
 - PostgreSQL database with pgvector extension (Neon or Supabase recommended)
 - OpenAI API key
 
@@ -45,7 +45,7 @@ A **privacy-first**, **FERPA-compliant** educational platform that trains K-12 e
 cd assistiveTechnology
 
 # 2. Install dependencies
-pnpm install
+npm install
 
 # 3. Copy environment variables
 cp env.template .env.local
@@ -55,13 +55,13 @@ cp env.template .env.local
 # - DATABASE_URL (PostgreSQL with pgvector)
 
 # 5. Initialize database schema and ingest documents
-pnpm tsx scripts/ingest.ts
+npm run ingest
 
 # 6. Run development server
-pnpm dev
+npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the app.
+Open (http://localhost:3000) to view the app.
 
 ---
 
@@ -161,10 +161,10 @@ EMBED_MODEL=text-embedding-3-large
 
 ```bash
 # Run unit tests
-pnpm test
+npm run test
 
 # Run E2E tests (Playwright)
-pnpm test:e2e
+npm run test:e2e
 ```
 
 ---
@@ -181,9 +181,9 @@ pnpm test:e2e
 ### Manual
 
 1. Set up PostgreSQL with pgvector on Neon or Supabase
-2. Run ingestion script: `pnpm tsx scripts/ingest.ts`
-3. Build: `pnpm build`
-4. Start: `pnpm start`
+2. Run ingestion script: `npm run ingest`
+3. Build: `npm run build`
+4. Start: `npm start`
 
 ---
 
@@ -213,7 +213,7 @@ export const SOURCES = [
 ];
 ```
 
-Then re-run: `pnpm tsx scripts/ingest.ts`
+Then re-run: `npm run ingest`
 
 ---
 
@@ -242,7 +242,7 @@ Then re-run: `pnpm tsx scripts/ingest.ts`
 
 ## 📖 Usage
 
-1. **Complete Training** (20-25 min)
+1. **Complete Training** (~25 min)
    - Take 4 interactive lessons
    - Pass quizzes with 80%+ accuracy
    - Unlock AI assistant
@@ -296,7 +296,7 @@ This software is intended for educational use by schools and educators.
 When source URLs are updated:
 
 ```bash
-pnpm tsx scripts/ingest.ts
+npm run ingest
 ```
 
 ### Update Lessons

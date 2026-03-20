@@ -24,7 +24,8 @@ export const brand = {
   },
   typography: {
     fontFamily: {
-      sans: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      sans: 'var(--font-body), ui-sans-serif, system-ui, sans-serif',
+      heading: 'var(--font-heading), ui-sans-serif, system-ui, sans-serif',
     },
   },
 } as const;

@@ -9,6 +9,10 @@ export const metadata = {
 Prompt engineering is the practice of asking AI the right question to get actionable, accurate answers. A well-crafted prompt includes context, specificity, and clear goals—turning vague requests into precise, useful recommendations.
 </InfoCard>
 
+<Scenario title="From vague to useful">
+Your teammate messages you: *"What’s good for writing?"* You know that prompt won’t surface actionable AT. In this lesson, you’ll practice turning vague asks into **SETT-rich** questions the assistant can actually answer—without naming any student.
+</Scenario>
+
 ---
 
 ## The SETT Anatomy of a Good Prompt
@@ -179,6 +183,18 @@ What [tech level] AT tools help [grade/age] students with [challenge]
 
 **Example:**  
 "What low-tech and mid-tech AT tools help 4th-grade students with dysgraphia complete written assignments in a general education classroom with Chromebooks?"
+
+<PromptTry prompt="What speech-to-text or word-prediction options work well for a middle school student with slow written output during essay drafting in Google Docs on a Chromebook? Prefer free or district-approved tools and include a quick getting-started tip for the teacher." />
+
+<LessonTakeaways items={[
+  "Strong prompts name the environment, task, and support need—Student and Environment and Tasks (SETT) —without PII.",
+  "Adding tech level (free, low-tech, Chromebook, etc.) narrows the list to what you can actually deploy.",
+  "Compare your before/after prompts: specificity is the lever that improves AT suggestions."
+]} />
+
+<ReflectionPrompt>
+Which part of SETT do you most often skip when you’re in a hurry—and what will you add first next time you ask the assistant?
+</ReflectionPrompt>
 
 ---
 

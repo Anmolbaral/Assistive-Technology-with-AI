@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { ListTodo } from "lucide-react";
 import { getLessonBySlug, getNextLesson, getPreviousLesson } from "@/lib/lessons";
 import { mdxComponents } from "@/lib/mdx";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { loadLessonContent } from "@/lib/loadLesson";
 import Link from "next/link";
 import { LessonClient } from "./lesson-client";
+import { LessonNavBar } from "@/components/lessons/LessonNavBar";
 
 export default async function LessonPage({
   params,
@@ -16,7 +17,7 @@ export default async function LessonPage({
 }) {
   const { slug } = params;
   const lesson = getLessonBySlug(slug);
-  
+
   if (!lesson) {
     notFound();
   }
@@ -24,7 +25,6 @@ export default async function LessonPage({
   const nextLesson = getNextLesson(slug);
   const prevLesson = getPreviousLesson(slug);
 
-  // Load MDX content server-side
   let content: string;
   try {
     content = await loadLessonContent(slug);
@@ -32,9 +32,16 @@ export default async function LessonPage({
     notFound();
   }
 
+  const previousNav = prevLesson
+    ? { href: `/lessons/${prevLesson.slug}`, label: "Previous" }
+    : { href: "/", label: "Back to home" };
+
+  const nextNav = nextLesson
+    ? { href: `/lessons/${nextLesson.slug}`, label: "Next lesson" }
+    : { href: "/complete", label: "Complete training" };
+
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl">
-      {/* Breadcrumb */}
+    <div className="container mx-auto px-4 py-8 max-w-4xl pb-28 md:pb-8">
       <nav className="mb-6" aria-label="Breadcrumb">
         <ol className="flex items-center gap-2 text-sm text-muted-foreground">
           <li>
@@ -42,67 +49,45 @@ export default async function LessonPage({
               Home
             </Link>
           </li>
-          <li>/</li>
+          <li aria-hidden>/</li>
+          <li>
+            <Link href="/#training-modules" className="hover:text-primary transition-colors">
+              Training
+            </Link>
+          </li>
+          <li aria-hidden>/</li>
           <li className="text-foreground">Lesson {lesson.order}</li>
         </ol>
       </nav>
 
-      {/* Lesson Header */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-3">
-          <Badge>Lesson {lesson.order} of 4</Badge>
+      <header className="mb-8">
+        <div className="flex flex-wrap items-center gap-3 mb-3">
+          <Badge>
+            Lesson {lesson.order} of 4
+          </Badge>
           <Badge variant="outline">{lesson.duration}</Badge>
         </div>
-        <h1 className="text-4xl font-bold">{lesson.title}</h1>
-      </div>
+        <h1 className="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-4">{lesson.title}</h1>
+        <Card className="border-primary/20 bg-primary/[0.04]">
+          <CardContent className="pt-5 pb-5">
+            <div className="flex gap-3">
+              <ListTodo className="h-5 w-5 text-primary shrink-0 mt-0.5" aria-hidden />
+              <div>
+                <p className="text-sm font-semibold text-foreground mb-1">In this lesson</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{lesson.teaser}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </header>
 
-      {/* Client-side wrapper for completion tracking */}
       <LessonClient slug={slug} />
 
-      {/* Lesson Content */}
-      <article className="prose prose-slate max-w-none mb-12">
-        <MDXRemote
-          source={content}
-          components={mdxComponents}
-          options={{ blockJS: false }}
-        />
+      <article className="prose prose-slate max-w-none mb-6 md:mb-12">
+        <MDXRemote source={content} components={mdxComponents} options={{ blockJS: false }} />
       </article>
 
-      {/* Navigation */}
-      <div className="flex justify-between items-center pt-8 border-t">
-        {prevLesson ? (
-          <Button variant="outline" asChild>
-            <Link href={`/lessons/${prevLesson.slug}`}>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Previous
-            </Link>
-          </Button>
-        ) : (
-          <Button variant="outline" asChild>
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
-            </Link>
-          </Button>
-        )}
-
-        {nextLesson ? (
-          <Button asChild>
-            <Link href={`/lessons/${nextLesson.slug}`}>
-              Next
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        ) : (
-          <Button variant="success" asChild>
-            <Link href="/complete">
-              Complete Training
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
-        )}
-      </div>
+      <LessonNavBar previous={previousNav} next={nextNav} />
     </div>
   );
 }
-

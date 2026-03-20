@@ -1,12 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Lexend, Source_Sans_3 } from "next/font/google";
 import "../styles/globals.css";
 import { brand } from "@/lib/theme";
 import Link from "next/link";
 import ClientFocusHandler from "@/components/content/ClientFocusHandler";
 import { Analytics } from "@vercel/analytics/react";
+import { HeaderNav } from "@/components/layout/HeaderNav";
 
-const inter = Inter({ subsets: ["latin"] });
+const sourceSans = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const lexend = Lexend({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "TechBridge Learning - AI & AT Training",
@@ -21,15 +32,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={`${sourceSans.variable} ${lexend.variable}`}>
+      <body className={`${sourceSans.className} font-sans antialiased`}>
         {/* Skip to main content */}
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
 
         {/* Header */}
-        <header role="banner" className="border-b bg-background sticky top-0 z-50">
+        <header role="banner" className="border-b bg-background sticky top-0 z-50 print:hidden">
           <div className="container mx-auto px-4 py-4 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
               <div
@@ -44,34 +55,7 @@ export default function RootLayout({
               </div>
             </Link>
 
-            <nav aria-label="Main navigation">
-              <ul className="flex gap-4">
-                <li>
-                  <Link
-                    href="/"
-                    className="text-sm hover:text-primary transition-colors"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/about"
-                    className="text-sm hover:text-primary transition-colors"
-                  >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/assistant"
-                    className="text-sm hover:text-primary transition-colors"
-                  >
-                    Assistant
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+            <HeaderNav />
           </div>
         </header>
 
@@ -82,7 +66,7 @@ export default function RootLayout({
         </main>
 
         {/* Footer */}
-        <footer role="contentinfo" className="border-t bg-muted/30 mt-16">
+        <footer role="contentinfo" className="border-t bg-muted/30 mt-16 print:hidden">
           <div className="container mx-auto px-4 py-8">
             <div className="grid md:grid-cols-3 gap-8">
             <div>

@@ -73,7 +73,7 @@ When users receive AI responses, sources are displayed at the bottom with:
 
 To add new sources:
 1. Add URL to `lib/rag/ingest.ts` → `SOURCES` array
-2. Run ingestion: `pnpm tsx scripts/ingest.ts`
+2. Run ingestion: `npm run ingest`
 3. Verify source is valid and accessible
 4. Update this documentation
 

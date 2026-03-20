@@ -6,7 +6,7 @@ This guide walks you through deploying the TechBridge Learning AI & AT Training 
 
 ## Prerequisites
 
-✅ Node.js 18+ and pnpm installed locally  
+✅ Node.js 18+ and npm installed locally  
 ✅ PostgreSQL database with pgvector extension (Neon or Supabase recommended)  
 ✅ OpenAI API key  
 ✅ GitHub account (for Vercel deployment)  
@@ -85,8 +85,8 @@ DATABASE_URL=postgresql://...
 Install dependencies and run ingestion:
 
 ```bash
-pnpm install
-pnpm tsx scripts/ingest.ts
+npm install
+npm run ingest
 ```
 
 This will:
@@ -131,7 +131,7 @@ This will:
 
 ```bash
 # Install Vercel CLI
-pnpm add -g vercel
+npm install -g vercel
 
 # Deploy
 vercel
@@ -211,7 +211,7 @@ When source URLs change or you add new ones:
 ```bash
 # Update lib/rag/ingest.ts with new URLs
 # Then run:
-pnpm tsx scripts/ingest.ts
+npm run ingest
 ```
 
 You can also trigger this from a Vercel cron job:

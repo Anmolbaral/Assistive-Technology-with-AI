@@ -63,10 +63,10 @@ test.describe("Full Learning Flow — Real Quiz Completion", () => {
     });
 
     // Verify landing page
-    await expect(page.getByRole("heading", { name: /AI for Assistive Technology/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /AI for assistive technology/i })).toBeVisible();
 
-    // Click "Start Training" to go to lesson 1
-    await page.getByRole("link", { name: /Start Training/ }).first().click();
+    // Click "Start Lesson 1" to go to lesson 1
+    await page.getByRole("link", { name: /Start Lesson 1/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/responsible-ai/);
 
     // --- LESSON 1: Responsible AI ---
@@ -76,7 +76,7 @@ test.describe("Full Learning Flow — Real Quiz Completion", () => {
 
     // Verify localStorage was updated by the real LessonQuiz component
     const lesson1Progress = await page.evaluate(() => {
-      const data = JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      const data = JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
       return data["responsible-ai"];
     });
     expect(lesson1Progress?.completed).toBe(true);
@@ -84,7 +84,7 @@ test.describe("Full Learning Flow — Real Quiz Completion", () => {
     expect(lesson1Progress?.completedAt).toBeTruthy();
 
     // Navigate to lesson 2 via the Next button
-    await page.locator("a", { hasText: "Next" }).click();
+    await page.getByRole("link", { name: /Next lesson/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/prompt-engineering/);
 
     // --- LESSON 2: Prompt Engineering ---
@@ -92,13 +92,13 @@ test.describe("Full Learning Flow — Real Quiz Completion", () => {
     await completeQuiz(page, "prompt-engineering");
 
     const lesson2Progress = await page.evaluate(() => {
-      const data = JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      const data = JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
       return data["prompt-engineering"];
     });
     expect(lesson2Progress?.quizPassed).toBe(true);
 
     // Navigate to lesson 3
-    await page.locator("a", { hasText: "Next" }).click();
+    await page.getByRole("link", { name: /Next lesson/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/data-privacy/);
 
     // --- LESSON 3: Data Privacy ---
@@ -106,13 +106,13 @@ test.describe("Full Learning Flow — Real Quiz Completion", () => {
     await completeQuiz(page, "data-privacy");
 
     const lesson3Progress = await page.evaluate(() => {
-      const data = JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      const data = JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
       return data["data-privacy"];
     });
     expect(lesson3Progress?.quizPassed).toBe(true);
 
     // Navigate to lesson 4
-    await page.locator("a", { hasText: "Next" }).click();
+    await page.getByRole("link", { name: /Next lesson/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/sett-framework/);
 
     // --- LESSON 4: SETT Framework ---
@@ -120,20 +120,20 @@ test.describe("Full Learning Flow — Real Quiz Completion", () => {
     await completeQuiz(page, "sett-framework");
 
     const lesson4Progress = await page.evaluate(() => {
-      const data = JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      const data = JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
       return data["sett-framework"];
     });
     expect(lesson4Progress?.quizPassed).toBe(true);
 
     // Verify all 4 lessons are complete in localStorage
     const allProgress = await page.evaluate(() => {
-      return JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      return JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
     });
     expect(Object.keys(allProgress)).toHaveLength(4);
 
     // Verify completion percentage is 100% via the actual function
     const percentage = await page.evaluate(() => {
-      const progress = JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      const progress = JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
       const slugs = ["responsible-ai", "prompt-engineering", "data-privacy", "sett-framework"];
       const completed = slugs.filter(s => progress[s]?.completed && progress[s]?.quizPassed).length;
       return Math.round((completed / slugs.length) * 100);
@@ -141,21 +141,21 @@ test.describe("Full Learning Flow — Real Quiz Completion", () => {
     expect(percentage).toBe(100);
 
     // Navigate to the Complete page via the "Complete Training" link
-    await page.locator("a", { hasText: "Complete Training" }).click();
+    await page.getByRole("link", { name: /Complete training/i }).click();
     await expect(page).toHaveURL(/\/complete/);
 
     // Verify the congratulations page renders
     await expect(page.getByRole("heading", { name: /Congratulations/ })).toBeVisible();
-    await expect(page.locator("text=AI AT Resource Assistant Unlocked")).toBeVisible();
+    await expect(page.locator("text=AT assistant unlocked")).toBeVisible();
 
     // Verify markComplete was called (training gate key set)
     const trainingComplete = await page.evaluate(() =>
-      localStorage.getItem("aea-training-complete")
+      localStorage.getItem("techbridge-training-complete")
     );
     expect(trainingComplete).toBe("1");
 
-    // Click "Try the AI Assistant"
-    await page.locator("button", { hasText: "Try the AI Assistant" }).click();
+    // Open AT assistant
+    await page.getByRole("link", { name: /Open AT assistant/i }).first().click();
     await expect(page).toHaveURL(/\/assistant/);
 
     // Assistant page should show the chat interface, not the training gate
@@ -198,7 +198,7 @@ test.describe("Quiz Failure and Retry Flow", () => {
 
     // Verify lesson was NOT marked complete
     const progress = await page.evaluate(() => {
-      return JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      return JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
     });
     expect(progress["responsible-ai"]).toBeUndefined();
 
@@ -213,7 +213,7 @@ test.describe("Quiz Failure and Retry Flow", () => {
 
     // Verify lesson is now marked complete
     const updatedProgress = await page.evaluate(() => {
-      return JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      return JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
     });
     expect(updatedProgress["responsible-ai"]?.quizPassed).toBe(true);
   });
@@ -226,7 +226,7 @@ test.describe("Role Selection Flow — Real Interaction", () => {
     await page.evaluate(() => {
       localStorage.clear();
       sessionStorage.clear();
-      localStorage.setItem("aea-training-complete", "1");
+      localStorage.setItem("techbridge-training-complete", "1");
     });
     await page.reload();
 
@@ -264,7 +264,7 @@ test.describe("Role Selection Flow — Real Interaction", () => {
   test("switching roles updates sample queries in real-time", async ({ page }) => {
     await page.goto("/assistant");
     await page.evaluate(() => {
-      localStorage.setItem("aea-training-complete", "1");
+      localStorage.setItem("techbridge-training-complete", "1");
       localStorage.setItem("techbridge-role", "teacher");
       sessionStorage.setItem("techbridge-role-selected-session", "true");
     });
@@ -296,7 +296,7 @@ test.describe("Role Selection Flow — Real Interaction", () => {
   test("role persists across full page navigation", async ({ page }) => {
     await page.goto("/assistant");
     await page.evaluate(() => {
-      localStorage.setItem("aea-training-complete", "1");
+      localStorage.setItem("techbridge-training-complete", "1");
       localStorage.setItem("techbridge-role", "at_specialist");
       sessionStorage.setItem("techbridge-role-selected-session", "true");
     });
@@ -332,9 +332,9 @@ test.describe("Completion Gate — Real Behavior", () => {
     await page.goto("/complete");
 
     // Should show "Almost There" since only 1/4 complete
-    await expect(page.getByRole("heading", { name: /Almost There/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Almost there/i })).toBeVisible();
     await expect(page.locator("text=25%")).toBeVisible();
-    await expect(page.locator("text=Continue Training")).toBeVisible();
+    await expect(page.getByRole("button", { name: /Continue training/i })).toBeVisible();
   });
 
   test("assistant gate shows real progress percentage", async ({ page }) => {
@@ -351,7 +351,7 @@ test.describe("Completion Gate — Real Behavior", () => {
     // Note: the assistant page may have a completion bypass for testing.
     // We verify the localStorage state is correct regardless.
     const percentage = await page.evaluate(() => {
-      const progress = JSON.parse(localStorage.getItem("aea-training-progress") || "{}");
+      const progress = JSON.parse(localStorage.getItem("techbridge-training-progress") || "{}");
       const slugs = ["responsible-ai", "prompt-engineering", "data-privacy", "sett-framework"];
       const completed = slugs.filter(s => progress[s]?.completed && progress[s]?.quizPassed).length;
       return Math.round((completed / slugs.length) * 100);
@@ -368,35 +368,35 @@ test.describe("Lesson Navigation — Real Link Clicks", () => {
     await expect(page.getByRole("heading", { name: /Responsible AI/ })).toBeVisible();
 
     // Click Next → lesson 2
-    await page.locator("a", { hasText: "Next" }).click();
+    await page.getByRole("link", { name: /Next lesson/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/prompt-engineering/);
     await expect(page.getByRole("heading", { name: /Prompt Engineering for AT Resources/, level: 1 })).toBeVisible();
 
     // Click Next → lesson 3
-    await page.locator("a", { hasText: "Next" }).click();
+    await page.getByRole("link", { name: /Next lesson/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/data-privacy/);
     await expect(page.getByRole("heading", { name: "Student Data Privacy & AI", level: 1 })).toBeVisible();
 
     // Click Next → lesson 4
-    await page.locator("a", { hasText: "Next" }).click();
+    await page.getByRole("link", { name: /Next lesson/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/sett-framework/);
     await expect(page.getByRole("heading", { name: "Using the SETT Framework with AI", level: 1 })).toBeVisible();
 
     // Lesson 4 should have "Complete Training" instead of "Next"
-    await expect(page.locator("a", { hasText: "Complete Training" })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Complete training/i })).toBeVisible();
 
     // Navigate back via Previous
-    await page.locator("a", { hasText: "Previous" }).click();
+    await page.getByRole("link", { name: /^Previous$/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/data-privacy/);
 
-    await page.locator("a", { hasText: "Previous" }).click();
+    await page.getByRole("link", { name: /^Previous$/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/prompt-engineering/);
 
-    await page.locator("a", { hasText: "Previous" }).click();
+    await page.getByRole("link", { name: /^Previous$/i }).first().click();
     await expect(page).toHaveURL(/\/lessons\/responsible-ai/);
 
-    // Lesson 1 should have "Back to Home" instead of "Previous"
-    await expect(page.locator("a", { hasText: "Back to Home" })).toBeVisible();
+    // Lesson 1 should have "Back to home" instead of "Previous"
+    await expect(page.getByRole("link", { name: /Back to home/i }).first()).toBeVisible();
   });
 });
 
@@ -462,8 +462,8 @@ test.describe("Mobile Responsive — Real Interaction", () => {
     await page.goto("/lessons/responsible-ai");
     await expect(page.getByRole("heading", { name: /Responsible AI/ })).toBeVisible();
 
-    // Next link should be visible and tappable
-    const nextLink = page.locator("a", { hasText: "Next" });
+    // Next lesson link should be visible and tappable (fixed bar on mobile)
+    const nextLink = page.getByRole("link", { name: /Next lesson/i }).first();
     await nextLink.scrollIntoViewIfNeeded();
     await nextLink.click();
     await expect(page).toHaveURL(/\/lessons\/prompt-engineering/);

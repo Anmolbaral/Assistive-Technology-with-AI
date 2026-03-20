@@ -11,6 +11,8 @@ import { Video } from "@/components/content/Video";
 import { Objectives } from "@/components/lessons/Objectives";
 import { ComparisonTable, FeatureGrid, ProcessSteps, ProsConsCard } from "@/components/content/ComparisonTable";
 import { IconGrid } from "@/components/content/IconGrid";
+import { Scenario, LessonTakeaways, ReflectionPrompt } from "@/components/content/MdxLessonBlocks";
+import { PromptTry } from "@/components/content/PromptTry";
 import { Shield, Lightbulb, AlertCircle, Info } from "lucide-react";
 
 /**
@@ -29,6 +31,10 @@ export const mdxComponents = {
   ProcessSteps,
   ProsConsCard,
   IconGrid,
+  Scenario,
+  LessonTakeaways,
+  ReflectionPrompt,
+  PromptTry,
   // Add icons for InfoCard
   Shield,
   Lightbulb,
